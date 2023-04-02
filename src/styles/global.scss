@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: '/fonts/Montserrat/Montserrat-Regular.ttf';
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  html {
+    height: 100vh;
+    padding: 0;
+  }
+  body {
+    min-height: 100vh;
+    padding: 0;
+  }
+  sup {
+    font-size: '58%';
+    font-weight: 600;
+  }
+  
+  .test:parent {
+    column-count: 2;
+  }
+  #applyCSS * {
+    font-family: Montserrat;
+  }
+  #applyCSS li {
+    max-width: 100%;
+    @media screen and (min-width: 960px) {
+      max-width: 530px;
+    }
+  }
+  
+  #applyCSS li span {
+    // background-color: aqua !important;
+    width: 200px !important;
+    @media screen and (min-width: 960px) {
+      width: unset !important;
+    }
+  }
+  
+  #applyCSS h3 {
+    font-weight: 700;
+  }
+  
+  #applyCSS label {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .MuiFormControl-root > label {
+    color: #7988a9 !important;
+    top: 0px !important;
+  }
+  
+  .MuiFormControl-root:focus-within > label {
+    color: #5ac0cd;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .react-tel-input .selected-flag {
+    padding: 0 0 0 16px !important;
+  }
+  
+  .MuiInputBase-root > fieldset > legend {
+    max-width: 0px !important;
+  }
+  
+  .MuiOutlinedInput-notchedOutline {
+    border-radius: 10px;
+    padding: 2px;
+    border-color: #cdd6e9 !important;
+  }
+  
+  .MuiOutlinedInput-root {
+    font-size: 0.8125rem !important;
+    @media screen and (min-width: 600px) {
+      font-size: 1rem !important;
+    }
+  }
+  
+  .MuiOutlinedInput-input {
+    color: #000000 !important;
+    font-weight: 500 !important;
+  }
+  
+  #field-wrapper [data-max='MM / YY 9'] {
+    margin-left: auto !important;
+  }
+  
