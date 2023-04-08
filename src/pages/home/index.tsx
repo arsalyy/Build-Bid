@@ -1,11 +1,16 @@
 import React from 'react'
 import Header from '../../components/home/header'
+import Footer from '../../components/home/footer'
+import GetQuote from '../../components/home/getQuote'
+import FAQ from '../../components/home/faq'
 
 const Home: React.FC = () => {
   return (
     <React.Fragment>
       <Header />
-      <div style={{ backgroundColor: 'black', width: '100%', height: '100%' }}>Hello</div>
+      <GetQuote />
+      <FAQ />
+      <Footer />
     </React.Fragment>
   )
 }

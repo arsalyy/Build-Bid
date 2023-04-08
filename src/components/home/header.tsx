@@ -1,12 +1,13 @@
 import React from 'react'
 import { makeStyles, Button, Typography } from '@material-ui/core'
 import Logo from '../../images/logo-black.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 
-const Header = () => {
+const Header: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
   const hideLogo = useMediaQuery({ query: '(max-width: 450px)' })
+  const navigate = useNavigate()
 
   const classes = makeStyles({
     myNav: {
@@ -57,7 +58,7 @@ const Header = () => {
           <span className="navbar-toggler-icon" />
         </button>
         {isMobile && (
-          <Button color="primary" className={classes.button} variant="contained">
+          <Button onClick={() => navigate('/start')} color="primary" className={classes.button} variant="contained">
             <Typography variant="body1">GET INSTANT QUOTE</Typography>
           </Button>
         )}
@@ -81,7 +82,7 @@ const Header = () => {
           </ul>
         </div>
         {!isMobile && (
-          <Button color="primary" className={classes.button} variant="contained">
+          <Button onClick={() => navigate('/start')} color="primary" className={classes.button} variant="contained">
             <Typography variant="body1">GET INSTANT QUOTE</Typography>
           </Button>
         )}
