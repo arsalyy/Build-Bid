@@ -18,6 +18,8 @@ import { setArea } from 'actions/startAction'
 import CancelIcon from '@material-ui/icons/Cancel'
 import Search from '../../images/search.png'
 import { ITheme } from 'interfaces/shared/ITheme'
+import Header from 'components/shared/header'
+import { useNavigate } from 'react-router-dom'
 
 const MySearchTitle = styled(Typography)({
   fontStyle: 'normal',
@@ -43,6 +45,7 @@ const Start: React.FC = () => {
   const dispatch = useDispatch()
   const primaryTextColor = useTheme<ITheme>().text.primary
   const [disable, setDisable] = useState<boolean>(true)
+  const navigate = useNavigate()
 
   const classes = makeStyles(() => {
     return {
@@ -101,6 +104,17 @@ const Start: React.FC = () => {
         padding: '0.8rem 14px',
         width: isMobile ? '100%' : '240px',
         height: '55px'
+      },
+      FooterBox: {
+        boxShadow: '0px -4px 20px rgba(177, 176, 176, 0.18)',
+        padding: '20px',
+        left: '0',
+        position: 'fixed',
+        bottom: '0px',
+        display: 'flex',
+        backgroundColor: '#FFFFFF',
+        width: '100%',
+        alignItems: 'center'
       }
     }
   })()
@@ -112,14 +126,14 @@ const Start: React.FC = () => {
 
   const nextButton = () => {
     return (
-      <div style={{ display: 'flex', width: '100%', marginTop: isMobile ? '3.438rem' : '10.875rem' }}>
+      <div style={{ display: 'flex', width: '100%', marginTop: isMobile ? '' : '10.875rem' }}>
         <Button
           id="start-button"
           className={classes.MyButton}
           disabled={disable}
           variant="contained"
           color="primary"
-          onClick={() => null}>
+          onClick={() => navigate('/quote')}>
           <Typography variant="h5" style={{ color: primaryTextColor, fontWeight: 500, textTransform: 'none' }}>
             NEXT
           </Typography>
@@ -170,7 +184,7 @@ const Start: React.FC = () => {
             )
           }}
         />
-        {nextButton()}
+        <Box className={isMobile ? classes.FooterBox : ''}>{nextButton()}</Box>
       </React.Fragment>
     )
   }
@@ -192,7 +206,7 @@ const Start: React.FC = () => {
   return (
     <Box className={classes.pageBox}>
       <Box className={classes.headerBox}>
-        <p>This is Header</p>
+        <Header />
       </Box>
       <Divider style={{ position: 'absolute', width: '100%', left: '0 ', background: '#CDD6E9' }} />
       <Box className={classes.contentBox}>{isMobile ? mobileView() : desktopView()}</Box>
