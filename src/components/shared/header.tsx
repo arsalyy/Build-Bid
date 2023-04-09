@@ -2,11 +2,10 @@ import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 import StepperForm from './navigation'
 import { Grid, Typography, Box, IconButton, makeStyles } from '@material-ui/core'
-import { useLocation } from 'react-router'
 import Img from '../../images/headerImg.png'
 import Back from '../../images/back.png'
 import { ROUTES } from '../../constants'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Header: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
