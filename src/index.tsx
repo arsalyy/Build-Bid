@@ -1,17 +1,15 @@
 import React from 'react'
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import ReactDOM from 'react-dom/client'
 import { PersistGate } from 'redux-persist/integration/react'
-import storage from 'redux-persist/lib/storage'
 import { Box, styled, ThemeProvider, CssBaseline } from '@material-ui/core'
-import { persistStore, persistReducer, createMigrate } from 'redux-persist'
+import { persistStore } from 'redux-persist'
 import { BrowserRouter } from 'react-router-dom'
 import reportWebVitals from './reportWebVitals'
 import App from './App'
+import { store } from './store/ReduxStore'
 import './index.css'
 import './styles/global.scss'
-import rootReducer from '../src/reducers/rootReducer'
 import { getTheme } from 'utilities/theme'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
@@ -32,21 +30,6 @@ const AppContainer = styled(Box)({
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
-const migrations = {
-  0: () => {
-    console.log('version 0')
-    return undefined
-  }
-}
-const persistConfig = {
-  key: 'root',
-  storage,
-  version: 0,
-  migrate: createMigrate(migrations, { debug: false }),
-  whitelist: ['startReducer']
-}
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-export const store = createStore(persistedReducer)
 const persistor = persistStore(store)
 
 root.render(

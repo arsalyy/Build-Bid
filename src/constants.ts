@@ -1,3 +1,5 @@
+export const USERS_ENDPOINT = 'http://localhost:4000/api/users'
+
 export const ROUTES = {
   Home: '/',
   Start: '/start',

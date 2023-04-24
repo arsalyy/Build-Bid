@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import {
   Typography,
   styled,
@@ -203,16 +202,6 @@ const Start: React.FC = () => {
       <Box>{getSearchView()}</Box>
     </Grid>
   )
-
-  useEffect(() => {
-    let users
-    const fetchData = async () => {
-      await axios.post('http://localhost:4000/api/users', { name: 'Arsal', email: 'arsal@gmail.com', password: 'arsal123' })
-      const { data } = await axios.get('http://localhost:4000/api/users')
-      users = data
-    }
-    fetchData().then(() => console.log('XXX users', users))
-  }, [])
 
   return (
     <Box className={classes.pageBox}>

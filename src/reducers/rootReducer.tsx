@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import { AnyAction } from 'redux'
 import { startReducer } from './startReducer'
+import { userReducer } from './userReducer'
 import { IReduxState } from '../interfaces/IReduxState'
 
 const reducers = combineReducers<IReduxState>({
-  startReducer
+  startReducer,
+  userReducer
 })
 
 export type StoreState = ReturnType<typeof reducers>
@@ -12,7 +14,8 @@ const rootReducer = (state: StoreState, action: AnyAction): StoreState => {
   if (action.type === 'EMPTY_STORE') {
     state = {
       ...state,
-      startReducer: undefined
+      startReducer: undefined,
+      userReducer: undefined
     }
   }
 
