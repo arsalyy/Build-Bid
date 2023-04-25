@@ -8,9 +8,9 @@ import WhiteLoader from '../../images/whiteLoader.png'
 import BlackLogo from '../../images/logo-black.png'
 import { verifyEmail } from '../../utilities'
 import { USERS_ENDPOINT } from '../../constants'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../actions/userAction'
+import OTPModal from '../../components/shared/otpModal'
 
 const Login: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
   const [request, setRequest] = useState<boolean>(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const navigate = useNavigate()
+  const [showModal, setShowModal] = useState<boolean>(false)
   const dispatch = useDispatch()
 
   useEffect(() => setEmailError(false), [email])
@@ -110,11 +110,12 @@ const Login: React.FC = () => {
             id: res.data.data.id,
             email: res.data.data.email,
             name: res.data.data.name,
-            type: res.data.data.type
+            type: res.data.data.type,
+            verified: false
           })
         )
         setRequest(false)
-        navigate('/dashboard')
+        setShowModal(true)
       } catch (error) {
         if (error.response.status === 404) {
           setEmailError(true)
@@ -162,6 +163,7 @@ const Login: React.FC = () => {
 
   return (
     <Box className={classes.pageBox}>
+      {showModal && <OTPModal />}
       <Box sx={{ width: '100%' }} className={classes.leftBox}>
         <img
           style={{

@@ -19,9 +19,9 @@ import WhiteLoader from '../../images/whiteLoader.png'
 import BlackLogo from '../../images/logo-black.png'
 import { verifyEmail } from '../../utilities'
 import { USERS_ENDPOINT } from '../../constants'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../actions/userAction'
+import OTPModal from '../../components/shared/otpModal'
 
 const MyFormControlBox = styled(FormControlLabel)({
   marginLeft: 0,
@@ -46,8 +46,8 @@ const SignUp: React.FC = () => {
   const [email, setEmail] = useState<string>('')
   const [name, setName] = useState<string>('')
   const [type, setType] = useState<string>('')
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [password, setPassword] = useState<string>('')
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   useEffect(() => setEmailError(false), [email])
@@ -180,11 +180,12 @@ const SignUp: React.FC = () => {
             id: res.data.data.id,
             email: res.data.data.email,
             name: res.data.data.name,
-            type: res.data.data.type
+            type: res.data.data.type,
+            verified: false
           })
         )
         setRequest(false)
-        navigate('/dashboard')
+        setShowModal(true)
       } catch (error) {
         if (error.response.status === 400) {
           setEmailError(true)
@@ -248,6 +249,7 @@ const SignUp: React.FC = () => {
 
   return (
     <Box className={classes.pageBox}>
+      {showModal && <OTPModal />}
       <Box sx={{ width: '100%' }} className={classes.leftBox}>
         <img
           style={{

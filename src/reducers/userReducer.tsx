@@ -4,7 +4,8 @@ const initialState: IUserReducer = {
   id: '',
   name: '',
   email: '',
-  type: ''
+  type: '',
+  verified: false
 }
 
 export function userReducer(state = initialState, action) {
@@ -13,6 +14,11 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
         ...action.payload
+      }
+    case 'SET_VERIFIED':
+      return {
+        ...state,
+        verified: action.payload
       }
     default:
       return state

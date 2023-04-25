@@ -6,3 +6,10 @@ export function setUser(data: IUserReducer) {
     payload: data
   }
 }
+
+export function setVerified(data: boolean) {
+  return {
+    type: 'SET_VERIFIED',
+    payload: data
+  }
+}

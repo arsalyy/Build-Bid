@@ -3,4 +3,5 @@ export interface IUserReducer {
   name: string
   email: string
   type: string
+  verified: boolean
 }
