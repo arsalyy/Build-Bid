@@ -16,7 +16,8 @@ const Header: React.FC = () => {
       margin: '0px auto',
       padding: '0px 10px',
       paddingTop: isMobile ? (hideLogo ? '25px' : '12.5px') : '',
-      paddingBottom: isMobile ? (hideLogo ? '25px' : '12.5px') : ''
+      paddingBottom: isMobile ? (hideLogo ? '25px' : '12.5px') : '',
+      boxShadow: '37px 14px 20px -20px #fff'
     },
     myContainer: {
       height: '100%',
@@ -65,20 +66,29 @@ const Header: React.FC = () => {
         <div className={`collapse navbar-collapse ${classes.myCollapsable}`} id="navbarNav">
           <ul className="navbar-nav">
             <li className={`nav-item ${classes.myItem}`}>
-              <Link className="nav-link" to="/">
-                <Typography variant="body1">What We Do</Typography>
-              </Link>
-            </li>
-            <li className={`nav-item ${classes.myItem}`}>
-              <Link className="nav-link" to="/">
-                <Typography variant="body1">Contact Us</Typography>
-              </Link>
-            </li>
-            <li className={`nav-item ${classes.myItem}`}>
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/about">
                 <Typography variant="body1">About Us</Typography>
               </Link>
             </li>
+            <li className={`nav-item ${classes.myItem}`}>
+              <Link className="nav-link" to="/contact">
+                <Typography variant="body1">Contact Us</Typography>
+              </Link>
+            </li>
+            {isMobile && (
+              <>
+                <li className={`nav-item ${classes.myItem}`}>
+                  <Link className="nav-link" to="/login">
+                    <Typography variant="body1">Log-In</Typography>
+                  </Link>
+                </li>
+                <li className={`nav-item ${classes.myItem}`}>
+                  <Link className="nav-link" to="/signup">
+                    <Typography variant="body1">Sign-Up</Typography>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         {!isMobile && (

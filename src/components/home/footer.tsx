@@ -23,11 +23,8 @@ const Footer: React.FC = () => {
           <a href="#" className="link-1">
             Home
           </a>
-          <a href="#">Blog</a>
-          <a href="#">Pricing</a>
-          <a href="#">About</a>
-          <a href="#">Faq</a>
-          <a href="#">Contact</a>
+          <a href="/about">About Us</a>
+          <a href="/contact">Contact Us</a>
         </p>
         <p className="footer-company-name">
           Build-Bid{' '}
