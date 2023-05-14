@@ -58,7 +58,8 @@ const signup = async (req, res) => {
         id: result._id,
         name: result.name,
         email: result.email,
-        type: result.type
+        type: result.type,
+        identityVerified: false
       },
       message: 'User Created'
     })
@@ -141,9 +142,27 @@ const verifyOTP = async (req, res) => {
   }
 }
 
+const uploadFile = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId)
+    if (!user) {
+      return res.status(404).send('User not found')
+    }
+
+    user.file = req.file.filename
+    await user.save()
+
+    res.send('File uploaded successfully')
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Internal server error')
+  }
+}
+
 module.exports = {
   login,
   signup,
   sendOTP,
-  verifyOTP
+  verifyOTP,
+  uploadFile
 }

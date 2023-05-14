@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Box, makeStyles, Typography, TextField, Button, useTheme } from '@material-ui/core'
+import { Box, makeStyles, Typography, styled, TextField, Button, useTheme } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import { ITheme } from 'interfaces/shared/ITheme'
 import { inputShadowStyle } from '../../utilities'
@@ -8,8 +8,9 @@ import WhiteLoader from '../../images/whiteLoader.png'
 import BlackLogo from '../../images/logo-black.png'
 import { verifyEmail } from '../../utilities'
 import { USERS_ENDPOINT } from '../../constants'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../actions/userAction'
+import { Link, useNavigate } from 'react-router-dom'
 import OTPModal from '../../components/shared/otpModal'
 
 const Login: React.FC = () => {
@@ -23,9 +24,22 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>('')
   const [showModal, setShowModal] = useState<boolean>(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const loggedIn = useSelector((state) => state.userReducer.verified)
 
+  useEffect(() => {
+    if (loggedIn) navigate('/dashboard')
+  }, [loggedIn])
   useEffect(() => setEmailError(false), [email])
   useEffect(() => setPasswordError(false), [password])
+
+  const MyLink = styled(Link)({
+    cursor: 'pointer',
+    color: primaryColor,
+    '&:hover': {
+      color: primaryColor
+    }
+  })
 
   const classes = makeStyles({
     pageBox: {
@@ -111,7 +125,9 @@ const Login: React.FC = () => {
             email: res.data.data.email,
             name: res.data.data.name,
             type: res.data.data.type,
-            verified: false
+            verified: false,
+            identityVerified: res.data.data.identityVerified,
+            waiting: res.data.data.waiting
           })
         )
         setRequest(false)
@@ -190,6 +206,14 @@ const Login: React.FC = () => {
                 lineHeight: 2
               }}>
               Welcome back! Let&apos;s pick up where you left off.
+            </Typography>
+            <Typography
+              variant="h5"
+              style={{
+                textAlign: isMobile ? 'left' : 'center',
+                lineHeight: 2
+              }}>
+              Didn&apos;t have an account? Try <MyLink to="/signup">signing-up</MyLink> first.
             </Typography>
             {(emailError || passwordError) && (
               <Box style={{ backgroundColor: '#FFF0F1', alignItems: 'center' }} className={classes.quotation}>

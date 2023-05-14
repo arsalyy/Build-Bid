@@ -5,7 +5,9 @@ const initialState: IUserReducer = {
   name: '',
   email: '',
   type: '',
-  verified: false
+  verified: false,
+  identityVerified: false,
+  waiting: false
 }
 
 export function userReducer(state = initialState, action) {
@@ -19,6 +21,16 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
         verified: action.payload
+      }
+    case 'SET_IDENTITY_VERIFIED':
+      return {
+        ...state,
+        identityVerified: action.payload
+      }
+    case 'SET_WAITING':
+      return {
+        ...state,
+        waiting: action.payload
       }
     default:
       return state

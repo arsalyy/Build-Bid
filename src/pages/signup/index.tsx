@@ -19,9 +19,12 @@ import WhiteLoader from '../../images/whiteLoader.png'
 import BlackLogo from '../../images/logo-black.png'
 import { verifyEmail } from '../../utilities'
 import { USERS_ENDPOINT } from '../../constants'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../actions/userAction'
+import { useNavigate } from 'react-router-dom'
 import OTPModal from '../../components/shared/otpModal'
+import VerificationModal from '../../components/shared/verificationModal'
+import WaitModal from '../../components/shared/waitModal'
 
 const MyFormControlBox = styled(FormControlLabel)({
   marginLeft: 0,
@@ -47,9 +50,33 @@ const SignUp: React.FC = () => {
   const [name, setName] = useState<string>('')
   const [type, setType] = useState<string>('')
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [vModal, setVModal] = useState<boolean>(false)
+  const [wModal, setWModal] = useState<boolean>(false)
   const [password, setPassword] = useState<string>('')
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const loggedIn = useSelector((state) => state.userReducer.verified)
+  const userType = useSelector((state) => state.userReducer.type)
+  const waiting = useSelector((state) => state.userReducer.waiting)
 
+  const navigateToDashboard = () => {
+    navigate('/dashboard')
+  }
+
+  useEffect(() => {
+    if (loggedIn)
+      if (userType === 'builder') {
+        if (waiting) {
+          setShowModal(false)
+          setVModal(false)
+          setWModal(true)
+        } else {
+          setShowModal(false)
+          setVModal(true)
+          setWModal(false)
+        }
+      } else navigateToDashboard()
+  }, [loggedIn, userType, waiting])
   useEffect(() => setEmailError(false), [email])
   useEffect(() => setPasswordError(false), [password])
   useEffect(() => setNameError(false), [name])
@@ -181,7 +208,9 @@ const SignUp: React.FC = () => {
             email: res.data.data.email,
             name: res.data.data.name,
             type: res.data.data.type,
-            verified: false
+            verified: false,
+            identityVerified: false,
+            waiting: false
           })
         )
         setRequest(false)
@@ -250,6 +279,8 @@ const SignUp: React.FC = () => {
   return (
     <Box className={classes.pageBox}>
       {showModal && <OTPModal />}
+      {vModal && <VerificationModal />}
+      {wModal && <WaitModal />}
       <Box sx={{ width: '100%' }} className={classes.leftBox}>
         <img
           style={{

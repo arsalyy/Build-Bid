@@ -25,6 +25,7 @@ const OTPModal: React.FC = () => {
   const [otpSent, setOtpSent] = useState<boolean>(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const type = useSelector((state) => state.userReducer.type)
 
   const sendOTP = async () => {
     try {
@@ -106,9 +107,7 @@ const OTPModal: React.FC = () => {
     setLoading(false)
     setOtpSuccess(true)
     dispatch(setVerified(true))
-    setTimeout(() => {
-      navigate('/dashboard')
-    }, 2500)
+    type !== 'builder' && setTimeout(() => navigate('/dashboard'), 2500)
   }
 
   const otpVerification = async (value) => {
