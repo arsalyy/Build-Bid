@@ -5,8 +5,10 @@ const usersSchema = new mongoose.Schema({
   email: String,
   password: String,
   type: String,
+  verified: Boolean,
   identityVerfied: Boolean,
-  file: String
+  file: String,
+  waiting: Boolean
 })
 
 const User = mongoose.model('User', usersSchema)

@@ -60,7 +60,7 @@ const WaitModal: React.FC = () => {
               marginTop: '20px'
             }}>
             Our team is working on your profile. Once your identity is being verified, you&apos;ll get an email from us. Thanks
-            for you patience!
+            for your patience!
           </Typography>
           <Button onClick={() => navigate('/')} color="primary" className={classes.button} variant="contained">
             <Typography variant="body1">Back to Home</Typography>

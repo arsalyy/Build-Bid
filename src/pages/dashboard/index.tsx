@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Box, makeStyles, Divider, Button, useTheme, Typography, styled } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import Header from '../../components/shared/header'
@@ -6,8 +6,6 @@ import { ITheme } from 'interfaces/shared/ITheme'
 import ResumeQuote from '../../images/ResumeQuote.png'
 import info from '../../images/info.png'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import WaitModal from '../../components/shared/waitModal'
 
 const BodyText = styled(Typography)({
   fontSize: '18px',
@@ -18,20 +16,6 @@ const Dashboard: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const secondaryColor = useTheme<ITheme>().palette.secondary.main
   const name = useSelector((state) => state.userReducer.name)
-  const loggedIn = useSelector((state) => state.userReducer.verified)
-  const type = useSelector((state) => state.userReducer.type)
-  const identityVerified = useSelector((state) => state.userReducer.identityVerified)
-  const navigate = useNavigate()
-  const [modal, setModal] = useState<boolean>(false)
-
-  const redirectFunction = (path) => {
-    navigate(`${path}`)
-  }
-
-  useEffect(() => {
-    if (!loggedIn) redirectFunction('/login')
-    else if (type === 'builder' && !identityVerified) setModal(true)
-  }, [loggedIn])
 
   const classes = makeStyles(() => {
     return {
@@ -71,9 +55,7 @@ const Dashboard: React.FC = () => {
     }
   })()
 
-  return modal ? (
-    <WaitModal />
-  ) : (
+  return (
     <Box className={classes.pageBox}>
       <Box className={classes.headerBox}>
         <Header viewType="dashboard" />

@@ -1,8 +1,11 @@
 import React from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
 import Img from '../../images/hero.png'
+import { useMediaQuery } from 'react-responsive'
 
 const Hero: React.FC = () => {
+  const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
+
   const classes = makeStyles({
     wrapper: {
       zIndex: 2,
@@ -16,7 +19,8 @@ const Hero: React.FC = () => {
       fontWeight: 400,
       position: 'relative',
       display: 'flex',
-      padding: '50px 90px'
+      padding: '50px 90px',
+      textAlign: isMobile ? 'center' : 'start'
     },
     heading: {
       fontWeight: 800,
@@ -28,7 +32,7 @@ const Hero: React.FC = () => {
   return (
     <Box className={classes.wrapper}>
       <Typography className={classes.heading}>World&apos;s fastest estimation for home construction</Typography>
-      <img src={Img} width="800px" height="400px" />
+      {!isMobile && <img src={Img} width="55%" height="400px" />}
     </Box>
   )
 }

@@ -125,13 +125,13 @@ const Login: React.FC = () => {
             email: res.data.data.email,
             name: res.data.data.name,
             type: res.data.data.type,
-            verified: false,
+            verified: res.data.data.verified,
             identityVerified: res.data.data.identityVerified,
             waiting: res.data.data.waiting
           })
         )
         setRequest(false)
-        setShowModal(true)
+        !loggedIn && setShowModal(true)
       } catch (error) {
         if (error.response.status === 404) {
           setEmailError(true)

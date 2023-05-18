@@ -33,14 +33,17 @@ const useStyle = makeStyles({
     }
   },
   noMouseEvent: {
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    display: 'flex',
+    justifyContent: 'center'
   },
   iconText: {
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    position: 'absolute'
+    position: 'absolute',
+    width: 'fit-content'
   },
   hidden: {
     display: 'none'
@@ -60,7 +63,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   imageButton = false,
   hoverLabel = 'Click or drag to upload file',
   dropLabel = 'Drop file here',
-  width = '600px',
+  width = '100%',
   height = '100px',
   backgroundColor = '#fff',
   onChange,

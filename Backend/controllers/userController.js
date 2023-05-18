@@ -29,7 +29,10 @@ const login = async (req, res) => {
           id: foundUser._id,
           name: foundUser.name,
           email: foundUser.email,
-          type: foundUser.type
+          type: foundUser.type,
+          verified: foundUser.verified,
+          identityVerified: foundUser.identityVerfied,
+          waiting: foundUser.waiting
         },
         message: 'User found'
       })
@@ -59,7 +62,9 @@ const signup = async (req, res) => {
         name: result.name,
         email: result.email,
         type: result.type,
-        identityVerified: false
+        verified: false,
+        identityVerified: false,
+        waiting: false
       },
       message: 'User Created'
     })
@@ -127,7 +132,7 @@ const sendOTP = async (req, res) => {
 }
 
 const verifyOTP = async (req, res) => {
-  const { otp } = req.body
+  const { otp, userId } = req.body
   const verified = await speakeasy.totp.verify({
     secret: SECRET_KEY,
     encoding: 'base32',
@@ -136,6 +141,10 @@ const verifyOTP = async (req, res) => {
     digits: 4
   })
   if (verified) {
+    const user = await User.findById(userId)
+    user.verified = true
+    await user.save()
+
     return res.status(200).json({ message: 'OTP Verified' })
   } else {
     return res.status(500).json({ message: 'Error' })
@@ -150,6 +159,7 @@ const uploadFile = async (req, res) => {
     }
 
     user.file = req.file.filename
+    user.waiting = true
     await user.save()
 
     res.send('File uploaded successfully')

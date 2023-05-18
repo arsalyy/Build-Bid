@@ -26,6 +26,7 @@ const OTPModal: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const type = useSelector((state) => state.userReducer.type)
+  const userId = useSelector((state) => state.userReducer.id)
 
   const sendOTP = async () => {
     try {
@@ -115,7 +116,8 @@ const OTPModal: React.FC = () => {
     setTimeout(async () => {
       try {
         const res = await axios.post(`${USERS_ENDPOINT}/verifyOTP`, {
-          otp: value
+          otp: value,
+          userId: userId
         })
         if (res.status === 200) redirectFunction()
       } catch (error) {

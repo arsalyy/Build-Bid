@@ -1,3 +1,4 @@
+import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home'
 import Start from './pages/start'
@@ -6,6 +7,7 @@ import SignUp from 'pages/signup'
 import Dashboard from 'pages/dashboard'
 import About from 'pages/about'
 import Contact from 'pages/contact'
+import AuthRoute from 'AuthRoute'
 
 const App = () => {
   return (
@@ -13,7 +15,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/dashboard" element={<AuthRoute Component={Dashboard} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/start" element={<Start />} />
       <Route path="/signup" element={<SignUp />} />
