@@ -118,7 +118,7 @@ const Navigation: React.FC<{ rideShare?: boolean }> = ({ rideShare }) => {
   }, [])
 
   function getSteps() {
-    return ['Start', 'Quote', 'Details', 'Declarations', 'Payment']
+    return ['Start', 'Details', 'Quote']
   }
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/home'
 import Start from './pages/start'
@@ -8,15 +8,29 @@ import Dashboard from 'pages/dashboard'
 import About from 'pages/about'
 import Contact from 'pages/contact'
 import AuthRoute from 'AuthRoute'
+import Admin from 'pages/admin'
+import Details from 'pages/details'
+import Quote from 'pages/quote'
+import { setLoggedIn } from 'actions/adminAction'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setLoggedIn(false))
+  })
+
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/dashboard" element={<AuthRoute Component={Dashboard} />} />
+      <Route path="/details" element={<Details />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/quote" element={<Quote />} />
       <Route path="/start" element={<Start />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/*" element={<Navigate to="/" />} />
