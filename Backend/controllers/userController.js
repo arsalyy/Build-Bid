@@ -108,7 +108,7 @@ const sendOTP = async (req, res) => {
       greeting: 'Hello!',
       intro: [`Thank you for choosing Build-Bid. Here is your OTP for verification: <strong>${otp}</strong>`],
       outro: ['Please use this OTP within the next 5 minutes to complete your verification.'],
-      signature: 'Best regards,'
+      signature: 'Best regards'
     }
   }
 
