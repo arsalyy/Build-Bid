@@ -35,6 +35,7 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
   const open = Boolean(anchorEl)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const name = useSelector((state) => state.userReducer.name)
+  const user = useSelector((state) => state.userReducer.type)
 
   const classes = makeStyles(() => {
     return {
@@ -220,9 +221,11 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
           }}
           open={Boolean(anchorElNav)}
           onClose={handleCloseNavMenu}>
-          <MenuItem onClick={() => navigate('/start')}>
-            <Typography>GET INSTANT QUOTE</Typography>
-          </MenuItem>
+          {user !== 'builder' && (
+            <MenuItem onClick={() => navigate('/start')}>
+              <Typography>GET INSTANT QUOTE</Typography>
+            </MenuItem>
+          )}
           <MenuItem onClick={handleCloseNavMenu}>
             <img src={profileCircle} style={{ marginRight: '15px' }} width={'22px'} height={'22px'} />
             <Typography>{name}</Typography>
@@ -270,16 +273,18 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
             </MyLink>
           </Box>
           <Box style={{ display: 'flex', float: 'right', alignItems: 'center' }}>
-            <Box
-              className={classes.menuItem}
-              style={{ backgroundColor: primaryColor, padding: '10.27px 25px', borderRadius: '5px' }}>
-              <Typography
-                onClick={() => navigate('/start')}
-                className={classes.menuItemText}
-                style={{ color: '#fff', cursor: 'pointer' }}>
-                Get instant quote
-              </Typography>
-            </Box>
+            {user !== 'builder' && (
+              <Box
+                className={classes.menuItem}
+                style={{ backgroundColor: primaryColor, padding: '10.27px 25px', borderRadius: '5px' }}>
+                <Typography
+                  onClick={() => navigate('/start')}
+                  className={classes.menuItemText}
+                  style={{ color: '#fff', cursor: 'pointer' }}>
+                  Get instant quote
+                </Typography>
+              </Box>
+            )}
             <Box className={classes.menuItem} style={{ paddingLeft: '30px' }}>
               <img src={notification} width={'24px'} height={'24px'} />
             </Box>

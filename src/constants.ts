@@ -1,5 +1,6 @@
 export const USERS_ENDPOINT = 'http://localhost:4000/api/users'
 export const ADMIN_ENDPOINT = 'http://localhost:4000/api/admin'
+export const QUOTE_ENDPOINT = 'http://localhost:4000/api/quote'
 
 export const ROUTES = {
   Home: '/',

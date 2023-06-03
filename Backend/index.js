@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const users = require('./routes/users')
 const admin = require('./routes/admin')
+const quote = require('./routes/quote')
 const express = require('express')
 var cors = require('cors')
 const app = express()
@@ -15,6 +16,7 @@ mongoose
 app.use(express.json())
 app.use('/api', users)
 app.use('/api', admin)
+app.use('/api', quote)
 
 const server = app.listen(4000, () => console.log('Listenng on Port 4000...'))
 
