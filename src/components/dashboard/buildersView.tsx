@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Box, makeStyles, Tabs, Tab, Typography } from '@material-ui/core'
 import AllBids from './allBids'
+import MyBids from './myBids'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -59,7 +60,7 @@ const BuildersView: React.FC = () => {
         <AllBids />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <MyBids />
       </TabPanel>
     </Box>
   )

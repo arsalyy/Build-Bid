@@ -31,7 +31,7 @@ const login = async (req, res) => {
           email: foundUser.email,
           type: foundUser.type,
           verified: foundUser.verified,
-          identityVerified: foundUser.identityVerfied,
+          identityVerified: foundUser.identityVerified,
           waiting: foundUser.waiting
         },
         message: 'User found'
@@ -127,7 +127,7 @@ const sendOTP = async (req, res) => {
       return res.status(400).json({ message: 'OTP sent successfully' })
     })
     .catch((error) => {
-      return res.status(500).send('Server error', error)
+      return res.status(500).send('Server error')
     })
 }
 

@@ -78,7 +78,7 @@ const verifyBuilder = async (req, res) => {
         email: email
       })
 
-      user.identityVerfied = true
+      user.identityVerified = true
       user.waiting = false
       await user.save()
 

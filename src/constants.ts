@@ -1,6 +1,8 @@
 export const USERS_ENDPOINT = 'http://localhost:4000/api/users'
 export const ADMIN_ENDPOINT = 'http://localhost:4000/api/admin'
 export const QUOTE_ENDPOINT = 'http://localhost:4000/api/quote'
+export const BID_ENDPOINT = 'http://localhost:4000/api/bid'
+export const PROJECT_ENDPOINT = 'http://localhost:4000/api/project'
 
 export const ROUTES = {
   Home: '/',

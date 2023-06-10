@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
@@ -17,9 +17,19 @@ import TimeToLeaveOutlinedIcon from '@mui/icons-material/TimeToLeaveOutlined'
 import { makeStyles } from '@material-ui/styles'
 import { useMediaQuery } from 'react-responsive'
 import CancelIcon from '@material-ui/icons/Cancel'
+import axios from 'axios'
+import { BID_ENDPOINT } from '../../constants'
+import { useSelector } from 'react-redux'
+import { useToasts } from 'react-toast-notifications'
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
+}
+
+interface IBidCard {
+  quoteId: string
+  takeInput: boolean
+  bidAmount: number
 }
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -42,11 +52,13 @@ const MySearchField = styled(TextField)({
   }
 })
 
-const BidCard = () => {
+const BidCard: React.FC<IBidCard> = ({ quoteId, takeInput, bidAmount }) => {
   const [expanded, setExpanded] = useState<boolean>(false)
   const [amount, setAmount] = useState<string>()
   const primaryColor = useTheme<ITheme>().palette.primary.main
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const userId = useSelector((state) => state.userReducer.id)
+  const { addToast } = useToasts()
 
   const handleExpandClick = () => {
     setExpanded(!expanded)
@@ -90,13 +102,28 @@ const BidCard = () => {
     }
   })()
 
+  const handleClick = async () => {
+    if (!amount) return
+
+    try {
+      const res = await axios.post(`${BID_ENDPOINT}/postBid`, {
+        user: userId,
+        quote: quoteId,
+        amount: amount
+      })
+      if (res.status === 200) addToast('Bid Posted Successfully', { appearance: 'success' })
+    } catch {
+      return addToast('Error Posting Bid', { appearance: 'error' })
+    }
+  }
+
   return (
     <Card>
-      <Box style={{ display: 'flex', maxHeight: '200px' }}>
+      <Box style={{ display: isMobile ? '' : 'flex', maxHeight: isMobile ? '' : '200px' }}>
         <CardMedia component="img" sx={{ width: 300, height: 256, objectFit: 'fill' }} src={House} alt="House" />
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Box style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '60%' }}>
+          <Box style={{ display: isMobile ? '' : 'flex', justifyContent: 'space-between' }}>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: isMobile ? '100%' : '60%' }}>
               <Typography component="div" variant="h5">
                 1 Kanal House
               </Typography>
@@ -124,50 +151,73 @@ const BidCard = () => {
                 </Box>
               </Box>
             </Box>
-            <Box style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: '40%' }}>
-              <MySearchField
-                className={classes.search}
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                placeholder={'Enter Amount'}
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                InputProps={{
-                  classes: { input: classes.input },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {amount && (
-                        <IconButton onClick={() => setAmount('')} style={{ padding: 3, margin: '0px 10px 5px 0px' }}>
-                          <CancelIcon style={{ color: 'rgba(87, 106, 148, 0.51)' }} />
-                        </IconButton>
-                      )}
-                    </InputAdornment>
-                  ),
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Typography component="div" variant="h6" style={{ marginBottom: '5px' }}>
-                        PKR
-                      </Typography>
-                    </InputAdornment>
-                  )
-                }}
-              />
-              <Button
-                id="bid-button"
-                style={{ height: '55px', borderRadius: '8px', textTransform: 'none' }}
-                color="primary"
-                fullWidth
-                variant="contained">
-                <Typography
-                  variant="h5"
-                  style={{
-                    fontWeight: 500
-                  }}>
-                  Place Bid
-                </Typography>
-              </Button>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '15px', width: isMobile ? '100%' : '40%' }}>
+              {takeInput ? (
+                <>
+                  <MySearchField
+                    className={classes.search}
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    placeholder={'Enter Amount'}
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    InputProps={{
+                      classes: { input: classes.input },
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {amount && (
+                            <IconButton onClick={() => setAmount('')} style={{ padding: 3, margin: '0px 10px 5px 0px' }}>
+                              <CancelIcon style={{ color: 'rgba(87, 106, 148, 0.51)' }} />
+                            </IconButton>
+                          )}
+                        </InputAdornment>
+                      ),
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Typography component="div" variant="h6" style={{ marginBottom: '5px' }}>
+                            PKR
+                          </Typography>
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                  <Button
+                    id="bid-button"
+                    style={{ height: '55px', borderRadius: '8px', textTransform: 'none' }}
+                    color="primary"
+                    fullWidth
+                    variant="contained"
+                    onClick={handleClick}>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        fontWeight: 500
+                      }}>
+                      Place Bid
+                    </Typography>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      fontWeight: 500
+                    }}>
+                    Your Bid Amount
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    style={{
+                      fontWeight: 'bolder',
+                      color: primaryColor
+                    }}>
+                    {bidAmount}
+                  </Typography>
+                </>
+              )}
             </Box>
           </Box>
         </CardContent>

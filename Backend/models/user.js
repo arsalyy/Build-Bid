@@ -6,7 +6,7 @@ const usersSchema = new mongoose.Schema({
   password: String,
   type: String,
   verified: Boolean,
-  identityVerfied: Boolean,
+  identityVerified: Boolean,
   file: String,
   waiting: Boolean
 })

@@ -1,56 +1,67 @@
-import React from 'react'
-import { Box, makeStyles, Typography } from '@material-ui/core'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from 'react'
+import { Box, makeStyles, Tabs, Tab, Typography } from '@material-ui/core'
+import MyQuotes from './myQuotes'
+import MyProjects from './myProjects'
 
-import info from '../../images/info.png'
+interface TabPanelProps {
+  children?: React.ReactNode
+  index: number
+  value: number
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}>
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  )
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
+  }
+}
 
 const UsersView: React.FC = () => {
-  const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const [value, setValue] = useState<number>(0)
 
   const classes = makeStyles(() => {
     return {
-      pageBox: { marginTop: '60px' },
-      infoBox: {
-        display: 'flex',
-        alignItems: 'center',
-        background: '#F9F9F9',
-        borderRadius: '8px',
-        padding: '20px 25px',
-        marginTop: '30px',
-        position: 'relative'
-      },
-      typoCover: {
-        '& .MuiBox-root': {
-          float: isMobile ? 'left' : 'unset'
-        }
-      }
+      pageBox: { marginTop: '60px' }
     }
   })()
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
+
   return (
     <Box className={classes.pageBox}>
-      <Typography variant="h3" style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '40px' }}>
-        Your Cover
-      </Typography>
-      <Box className={classes.infoBox}>
-        {isMobile ? (
-          <>
-            <Typography
-              className={classes.typoCover}
-              style={{ fontSize: '1.125', fontWeight: 500, marginLeft: isMobile ? '' : '20px' }}>
-              <img src={info} style={{ marginRight: '5px' }} width={'14px'} height={'14px'} />
-              When you have an estimation, your estimation details and their bids will all be live here.
-            </Typography>
-          </>
-        ) : (
-          <>
-            <img src={info} width={'24px'} height={'24px'} />
-            <Typography style={{ fontSize: '1.125', fontWeight: 500, marginLeft: '20px' }}>
-              When you have an estimation, your estimation details and their bids will all be live here.
-            </Typography>
-          </>
-        )}
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
+          <Tab label="My Quotes" {...a11yProps(0)} />
+          <Tab label="My Projects" {...a11yProps(1)} />
+        </Tabs>
       </Box>
+      <TabPanel value={value} index={0}>
+        <MyQuotes />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <MyProjects />
+      </TabPanel>
     </Box>
   )
 }

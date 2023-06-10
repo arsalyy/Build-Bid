@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { Box, makeStyles, useTheme, Typography } from '@material-ui/core'
-import axios from 'axios'
-import { QUOTE_ENDPOINT } from '../../constants'
-import BidCard from '../shared/bidCard'
-import CircularProgress from '@mui/material/CircularProgress'
-import { ITheme } from 'interfaces/shared/ITheme'
+import React, { useEffect, useState } from 'react'
+import { Box, makeStyles, Typography, useTheme } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import info from '../../images/info.png'
+import axios from 'axios'
+import { QUOTE_ENDPOINT } from '../../constants'
+import { useSelector } from 'react-redux'
+import QuoteCard from 'components/shared/quoteCard'
+import { ITheme } from 'interfaces/shared/ITheme'
+import CircularProgress from '@mui/material/CircularProgress'
 
-const AllBids: React.FC = () => {
+const MyQuotes: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [quotes, setQuotes] = useState<Array<any>>([])
-  const primaryColor = useTheme<ITheme>().palette.primary.main
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const userId = useSelector((state) => state.userReducer.id)
+  const primaryColor = useTheme<ITheme>().palette.primary.main
 
   const classes = makeStyles(() => {
     return {
@@ -40,7 +42,9 @@ const AllBids: React.FC = () => {
   })()
 
   const callApi = async () => {
-    const res = await axios.post(`${QUOTE_ENDPOINT}/findMany`)
+    const res = await axios.post(`${QUOTE_ENDPOINT}/myQuotes`, {
+      user: userId
+    })
     setQuotes(res.data['quotes'])
     setLoading(false)
   }
@@ -66,14 +70,14 @@ const AllBids: React.FC = () => {
                 className={classes.typoCover}
                 style={{ fontSize: '1.125rem', fontWeight: 500, marginLeft: isMobile ? '' : '20px' }}>
                 <img src={info} style={{ marginRight: '5px' }} width={14} height={14} />
-                Oops! There are no currently live projects to bid on, please check back later.
+                When you have an estimation, your estimation details and their bids will all be live here.
               </Typography>
             </>
           ) : (
             <>
               <img src={info} width={24} height={24} />
               <Typography style={{ fontSize: '1.125rem', fontWeight: 500, marginLeft: '20px' }}>
-                Oops! There are no currently live projects to bid on, please check back later.
+                When you have an estimation, your estimation details and their bids will all be live here.
               </Typography>
             </>
           )}
@@ -81,7 +85,7 @@ const AllBids: React.FC = () => {
       ) : (
         <Box className={classes.listWrapper}>
           {quotes.map((quote, index) => (
-            <BidCard key={index} quoteId={quote.id} takeInput={true} bidAmount={0} />
+            <QuoteCard key={index} quote={quote} callBack={callApi} />
           ))}
         </Box>
       )}
@@ -89,4 +93,4 @@ const AllBids: React.FC = () => {
   )
 }
 
-export default AllBids
+export default MyQuotes

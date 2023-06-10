@@ -13,6 +13,7 @@ import './styles/global.scss'
 import { getTheme } from 'utilities/theme'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
+import { ToastProvider } from 'react-toast-notifications'
 
 const AllAppWrapper = styled(Box)({
   height: '100vh',
@@ -45,7 +46,9 @@ root.render(
               rel="stylesheet"
             />
             <BrowserRouter>
-              <App />
+              <ToastProvider autoDismiss={true} newestOnTop={true}>
+                <App />
+              </ToastProvider>
             </BrowserRouter>
           </ThemeProvider>
         </PersistGate>

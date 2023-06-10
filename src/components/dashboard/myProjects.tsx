@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { Box, makeStyles, useTheme, Typography } from '@material-ui/core'
-import axios from 'axios'
-import { QUOTE_ENDPOINT } from '../../constants'
-import BidCard from '../shared/bidCard'
-import CircularProgress from '@mui/material/CircularProgress'
-import { ITheme } from 'interfaces/shared/ITheme'
+import React, { useEffect, useState } from 'react'
+import { Box, makeStyles, Typography, useTheme } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import info from '../../images/info.png'
+import axios from 'axios'
+import { PROJECT_ENDPOINT } from '../../constants'
+import { useSelector } from 'react-redux'
+import { ITheme } from 'interfaces/shared/ITheme'
+import CircularProgress from '@mui/material/CircularProgress'
+import ProjectCard from 'components/shared/projectCard'
 
-const AllBids: React.FC = () => {
+const MyProjects: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
-  const [quotes, setQuotes] = useState<Array<any>>([])
-  const primaryColor = useTheme<ITheme>().palette.primary.main
+  const [projects, setProjects] = useState<Array<any>>([])
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const userId = useSelector((state) => state.userReducer.id)
+  const userType = useSelector((state) => state.userReducer.type)
+  const primaryColor = useTheme<ITheme>().palette.primary.main
 
   const classes = makeStyles(() => {
     return {
@@ -40,8 +43,11 @@ const AllBids: React.FC = () => {
   })()
 
   const callApi = async () => {
-    const res = await axios.post(`${QUOTE_ENDPOINT}/findMany`)
-    setQuotes(res.data['quotes'])
+    const res = await axios.post(`${PROJECT_ENDPOINT}/myProjects`, {
+      user: userId,
+      type: userType
+    })
+    setProjects(res.data['projects'])
     setLoading(false)
   }
 
@@ -52,13 +58,15 @@ const AllBids: React.FC = () => {
     }, 3000)
   }, [])
 
+  console.log('XXX projects', projects)
+
   return (
     <Box className={classes.pageBox}>
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress sx={{ color: primaryColor }} />
         </Box>
-      ) : quotes.length <= 0 ? (
+      ) : projects.length <= 0 ? (
         <Box className={classes.infoBox}>
           {isMobile ? (
             <>
@@ -66,22 +74,22 @@ const AllBids: React.FC = () => {
                 className={classes.typoCover}
                 style={{ fontSize: '1.125rem', fontWeight: 500, marginLeft: isMobile ? '' : '20px' }}>
                 <img src={info} style={{ marginRight: '5px' }} width={14} height={14} />
-                Oops! There are no currently live projects to bid on, please check back later.
+                No Projects. When you have a project, your project details will all be live here.
               </Typography>
             </>
           ) : (
             <>
               <img src={info} width={24} height={24} />
               <Typography style={{ fontSize: '1.125rem', fontWeight: 500, marginLeft: '20px' }}>
-                Oops! There are no currently live projects to bid on, please check back later.
+                No Projects. When you have a project, your project details will all be live here.
               </Typography>
             </>
           )}
         </Box>
       ) : (
         <Box className={classes.listWrapper}>
-          {quotes.map((quote, index) => (
-            <BidCard key={index} quoteId={quote.id} takeInput={true} bidAmount={0} />
+          {projects.map((project, index) => (
+            <ProjectCard key={index} quote={project.quote} bid={project.bid} user={project.user} builder={project.builder} />
           ))}
         </Box>
       )}
@@ -89,4 +97,4 @@ const AllBids: React.FC = () => {
   )
 }
 
-export default AllBids
+export default MyProjects
