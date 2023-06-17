@@ -133,7 +133,7 @@ const Start: React.FC = () => {
           disabled={disable}
           variant="contained"
           color="primary"
-          onClick={() => navigate('/quote')}>
+          onClick={() => navigate('/details?step=1')}>
           <Typography variant="h5" style={{ color: primaryTextColor, fontWeight: 500, textTransform: 'none' }}>
             NEXT
           </Typography>

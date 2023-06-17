@@ -3,12 +3,14 @@ import { AnyAction } from 'redux'
 import { adminReducer } from './adminReducer'
 import { startReducer } from './startReducer'
 import { userReducer } from './userReducer'
+import { detailsReducer } from './detailsReducer'
 import { IReduxState } from '../interfaces/IReduxState'
 
 const reducers = combineReducers<IReduxState>({
   adminReducer,
   startReducer,
-  userReducer
+  userReducer,
+  detailsReducer
 })
 
 export type StoreState = ReturnType<typeof reducers>
@@ -18,7 +20,8 @@ const rootReducer = (state: StoreState, action: AnyAction): StoreState => {
       ...state,
       adminReducer: undefined,
       startReducer: undefined,
-      userReducer: undefined
+      userReducer: undefined,
+      detailsReducer: undefined
     }
   }
 

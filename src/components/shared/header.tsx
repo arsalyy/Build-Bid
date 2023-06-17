@@ -4,8 +4,7 @@ import StepperForm from './navigation'
 import { Grid, useTheme, Typography, Box, Menu, MenuItem, IconButton, styled, Link, makeStyles } from '@material-ui/core'
 import Img from '../../images/headerImg.png'
 import Back from '../../images/back.png'
-import { ROUTES } from '../../constants'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ITheme } from 'interfaces/shared/ITheme'
 import notification from '../../images/notification.svg'
 import caret from '../../images/caret.svg'
@@ -27,7 +26,6 @@ const MyLink = styled(Link)({
 const Header: React.FC<IHeader> = (props: IHeader) => {
   const { viewType } = props
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
-  const location = useLocation()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const primaryColor = useTheme<ITheme>().palette.primary.main
@@ -111,11 +109,7 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
     }
   })()
 
-  const onBack = () => {
-    const routes = Object.values(ROUTES)
-    const index = routes.findIndex((route) => route === location.pathname)
-    navigate(routes[index - 1])
-  }
+  const onBack = () => navigate(-1)
 
   const MobileView = () => {
     return (
