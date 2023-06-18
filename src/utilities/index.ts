@@ -42,6 +42,8 @@ export const getQuotePayload = (state: IReduxState) => {
       storey: state.detailsReducer.generalQuestions.find((q) => q.id === '7043cced-59c4-46d3-970b-0a008ca4db6b')?.answer ?? '',
       brick: state.detailsReducer.generalQuestions.find((q) => q.id === '66ce5487-a027-40fc-95d0-2daab1a3b008')?.answer ?? '',
       cement: state.detailsReducer.generalQuestions.find((q) => q.id === '6e4422eb-6461-412c-8e16-c29bdfa2035b')?.answer ?? '',
+      sand: state.detailsReducer.generalQuestions.find((q) => q.id === '0514056a-d1e2-47ae-9aeb-b7e6fdeaaa6f')?.answer ?? '',
+      crush: state.detailsReducer.generalQuestions.find((q) => q.id === '233363bb-aaa7-4cd1-8cdd-b9f3b3ad8252')?.answer ?? '',
       plumbing:
         state.detailsReducer.generalQuestions.find((q) => q.id === '5680e43a-9a1c-4a30-8213-ebeca5e3651e')?.answer ?? 'no',
       electric: state.detailsReducer.generalQuestions.find((q) => q.id === '5680e43a-9a1c-4a30-8213-ebeca5e3651e')?.answer ?? 'no'

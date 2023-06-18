@@ -2,7 +2,37 @@ const mongoose = require('mongoose')
 
 const quotesSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  price: Number,
+  quote: {
+    price: Number,
+    breakdown: [
+      {
+        name: String,
+        label: String,
+        cost: Number,
+        breakdown: [
+          {
+            name: String,
+            label: String,
+            cost: Number,
+            perMarla: Number,
+            options: {
+              gradeA: Number,
+              gradeB: Number,
+              gradeC: Number,
+              lucky: Number,
+              dg: Number,
+              mapleLeaf: Number,
+              ravi: Number,
+              chenab: Number,
+              margala: Number,
+              sarghoda: Number
+            },
+            unit: String
+          }
+        ]
+      }
+    ]
+  },
   area: Number,
   areaInMarla: Number,
   floorPlan: {

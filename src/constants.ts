@@ -33,13 +33,34 @@ export const getDetailsData = () => {
       ]
     },
     {
-      id: '66ce5487-a027-40fc-95d0-2daab1a3b008',
+      id: '233363bb-aaa7-4cd1-8cdd-b9f3b3ad8252',
       type: 'statement',
       varinat: 'double',
-      title: 'Do you prefer to use grade-1 bricks or grade-2 bricks for your project?',
+      title: 'Which source of crush would you prefer to use for your project?',
       options: [
-        { id: 'grade1', value: 'Grade - 1 ' },
-        { id: 'garde2', value: 'Grade - 2' }
+        { id: 'margala', value: 'Margala' },
+        { id: 'sarghoda', value: 'Sarghoda' }
+      ]
+    },
+    {
+      id: '66ce5487-a027-40fc-95d0-2daab1a3b008',
+      type: 'statement',
+      varinat: 'triple',
+      title: 'Which grade of bricks would you prefer to use for your project?',
+      options: [
+        { id: 'gradeA', value: 'Grade - A ' },
+        { id: 'gardeB', value: 'Grade - B' },
+        { id: 'gardeC', value: 'Grade - C' }
+      ]
+    },
+    {
+      id: '0514056a-d1e2-47ae-9aeb-b7e6fdeaaa6f',
+      type: 'statement',
+      varinat: 'double',
+      title: 'Which source of sand would you prefer to use for your project?',
+      options: [
+        { id: 'ravi', value: 'Ravi' },
+        { id: 'chenab', value: 'Chenab' }
       ]
     },
     {

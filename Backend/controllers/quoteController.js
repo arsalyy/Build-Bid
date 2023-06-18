@@ -1,13 +1,16 @@
 const { Quote } = require('../models/quote')
 const { Bid } = require('../models/bid')
 const { Project } = require('../models/project')
+const { generateQuote } = require('../helpers')
 
 const create = async (req, res) => {
-  console.log('XXX', req.body)
   const { user, area, areaInMarla, floorPlan, generalQuestions, securityQuestions } = req.body
+
+  const quote = await generateQuote(areaInMarla, generalQuestions, securityQuestions)
+
   const newQuote = new Quote({
     user: user,
-    price: 2500000,
+    quote: quote,
     area: area,
     areaInMarla: areaInMarla,
     floorPlan: floorPlan,
