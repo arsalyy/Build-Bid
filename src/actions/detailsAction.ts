@@ -1,4 +1,4 @@
-import { IDetails, IDetailsReducer, IFloorPlan } from 'interfaces/details/IDetails'
+import { IDetails, IFloorPlan, IDetailsReducer } from 'interfaces/details/IDetails'
 
 export function setDetails(data: IDetailsReducer) {
   return {

@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { IFloorPlan } from 'interfaces/details/IDetails'
 import qs from 'query-string'
 

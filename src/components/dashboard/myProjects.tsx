@@ -58,8 +58,6 @@ const MyProjects: React.FC = () => {
     }, 3000)
   }, [])
 
-  console.log('XXX projects', projects)
-
   return (
     <Box className={classes.pageBox}>
       {loading ? (

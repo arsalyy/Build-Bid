@@ -13,6 +13,7 @@ import Details from 'pages/details'
 import Quote from 'pages/quote'
 import { setLoggedIn } from 'actions/adminAction'
 import { useDispatch } from 'react-redux'
+import AppRoute from 'AppRoute'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -28,10 +29,10 @@ const App = () => {
       <Route path="/admin" element={<Admin />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/dashboard" element={<AuthRoute Component={Dashboard} />} />
-      <Route path="/details" element={<Details />} />
+      <Route path="/details" element={<AppRoute Component={Details} />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/quote" element={<Quote />} />
-      <Route path="/start" element={<Start />} />
+      <Route path="/quote" element={<AppRoute Component={Quote} />} />
+      <Route path="/start" element={<AppRoute Component={Start} />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/*" element={<Navigate to="/" />} />
     </Routes>

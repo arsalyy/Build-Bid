@@ -3,7 +3,7 @@ import { Box, makeStyles, Divider, Grid } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import Header from 'components/shared/header'
 import { parseQuery } from 'utilities'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import GeneralQuestions from 'components/details/generalQuestions'
 import SecurityQuestions from 'components/details/securityQuestions'
 import FloorPlanConfirmation from 'components/details/floorPlanConfirmation'
@@ -12,6 +12,7 @@ const Details: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const [step, setStep] = useState<number>(1)
   const location = useLocation()
+  const navigate = useNavigate()
 
   const classes = makeStyles(() => {
     return {
@@ -25,7 +26,17 @@ const Details: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
     const stepper = parseInt(parseQuery(location.search)?.step as string)
-    !stepper ? setStep(1) : setStep(stepper)
+    if (!stepper) {
+      const searchParams = new URLSearchParams(location.search)
+      searchParams.set('step', '1')
+      const newSearch = searchParams.toString()
+      navigate({
+        ...location,
+        search: newSearch
+      })
+    } else {
+      setStep(stepper)
+    }
   }, [location])
 
   return (

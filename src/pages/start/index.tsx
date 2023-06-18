@@ -149,9 +149,13 @@ const Start: React.FC = () => {
           <First variant="h3">First of all,</First>
           <MySearchTitle variant="h3">&nbsp;what is your total area?</MySearchTitle>
         </Box>
-        <Typography variant="body1" style={{ color: '#576A94', marginBottom: '15px' }}>
+        <Typography variant="body1" style={{ color: '#576A94' }}>
           NOTE: We accept area in &nbsp;
           <span style={{ color: '#252A41', textDecoration: 'underline', fontWeight: '500' }}>square meters (&#13217;)</span>
+        </Typography>
+        <Typography variant="body1" style={{ color: '#576A94', marginBottom: '15px' }}>
+          NOTE: Minimum Area is &nbsp;
+          <span style={{ color: '#252A41', textDecoration: 'underline', fontWeight: '500' }}>76 (&#13217;) or 3 marla</span>
         </Typography>
         <MySearchField
           className={classes.search}

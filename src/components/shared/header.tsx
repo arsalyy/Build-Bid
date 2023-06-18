@@ -4,7 +4,7 @@ import StepperForm from './navigation'
 import { Grid, useTheme, Typography, Box, Menu, MenuItem, IconButton, styled, Link, makeStyles } from '@material-ui/core'
 import Img from '../../images/headerImg.png'
 import Back from '../../images/back.png'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { ITheme } from 'interfaces/shared/ITheme'
 import notification from '../../images/notification.svg'
 import caret from '../../images/caret.svg'
@@ -14,6 +14,8 @@ import { setUser } from 'actions/userAction'
 import { useDispatch, useSelector } from 'react-redux'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import { ROUTES } from '../../constants'
+import { parseQuery } from '../../utilities'
 
 interface IHeader {
   viewType?: string
@@ -28,6 +30,7 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const location = useLocation()
   const primaryColor = useTheme<ITheme>().palette.primary.main
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
@@ -109,7 +112,40 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
     }
   })()
 
-  const onBack = () => navigate(-1)
+  const onBack = () => {
+    switch (location.pathname) {
+      case ROUTES.Start:
+        navigate(ROUTES.Home)
+        break
+      case ROUTES.Details:
+        {
+          switch (parseInt(parseQuery(location.search)?.step as string)) {
+            case 1:
+              navigate(ROUTES.Start)
+              break
+            case 2:
+              navigate({
+                pathname: ROUTES.Details,
+                search: `?step=1`
+              })
+              break
+            case 3:
+              navigate({
+                pathname: ROUTES.Details,
+                search: `?step=2`
+              })
+              break
+          }
+        }
+        break
+      case ROUTES.Quote:
+        navigate({
+          pathname: ROUTES.Details,
+          search: `?step=3`
+        })
+        break
+    }
+  }
 
   const MobileView = () => {
     return (
