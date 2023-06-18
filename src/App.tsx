@@ -29,10 +29,10 @@ const App = () => {
       <Route path="/admin" element={<Admin />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/dashboard" element={<AuthRoute Component={Dashboard} />} />
-      <Route path="/details" element={<AppRoute Component={Details} />} />
+      <Route path="/details" element={<AuthRoute Component={AppRoute} ComponentProp={Details} />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/quote" element={<AppRoute Component={Quote} />} />
-      <Route path="/start" element={<AppRoute Component={Start} />} />
+      <Route path="/quote" element={<AuthRoute Component={AppRoute} ComponentProp={Quote} />} />
+      <Route path="/start" element={<AuthRoute Component={AppRoute} ComponentProp={Start} />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/*" element={<Navigate to="/" />} />
     </Routes>
