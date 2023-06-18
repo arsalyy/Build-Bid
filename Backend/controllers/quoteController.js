@@ -3,12 +3,23 @@ const { Bid } = require('../models/bid')
 const { Project } = require('../models/project')
 
 const create = async (req, res) => {
-  const { user, price } = req.body
-  const newUser = new Quote({ user: user, price: price })
+  console.log('XXX', req.body)
+  const { user, area, areaInMarla, floorPlan, generalQuestions, securityQuestions } = req.body
+  const newQuote = new Quote({
+    user: user,
+    price: 2500000,
+    area: area,
+    areaInMarla: areaInMarla,
+    floorPlan: floorPlan,
+    generalQuestions: generalQuestions,
+    securityQuestions: securityQuestions
+  })
+
   try {
-    await newUser.save()
+    const result = await newQuote.save()
     return res.status(200).send({
-      message: 'Quote Created'
+      message: 'Quote Created',
+      body: result
     })
   } catch (e) {
     return res.status(500).send({

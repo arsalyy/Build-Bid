@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, makeStyles, Divider, Grid, styled, Typography } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import Header from 'components/shared/header'
 import EstimationBreakdown from 'components/quote/estimationBreakdown'
 import BidBox from 'components/quote/bidBox'
+import Transition from 'components/quote/transition'
+import { getQuotePayload } from 'utilities'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { QUOTE_ENDPOINT } from '../../constants'
 
 const Quote: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const [isQuoteLoading, setIsQuoteLoading] = useState<boolean>(false)
+  const [secondImage, setSecondImage] = useState<boolean>(false)
+  const state = useSelector((state) => state)
 
   const MyTitle = styled(Typography)({
     fontWeight: 800,
@@ -71,7 +79,35 @@ const Quote: React.FC = () => {
     }
   ]
 
-  return (
+  const onMount = async () => {
+    const payload = getQuotePayload(state)
+
+    try {
+      const res = await axios.post(`${QUOTE_ENDPOINT}/create`, {
+        ...payload
+      })
+      if (res.status === 200) console.log('XXX res', res)
+    } catch (error) {
+      console.error(error)
+    }
+
+    setTimeout(() => {
+      setSecondImage(true)
+    }, 2000)
+    setTimeout(() => {
+      setIsQuoteLoading(false)
+    }, 4000)
+  }
+
+  useEffect(() => {
+    setIsQuoteLoading(true)
+    window.scrollTo(0, 0)
+    onMount()
+  }, [])
+
+  return isQuoteLoading ? (
+    <Transition showSecondImage={secondImage} />
+  ) : (
     <Box className={classes.PageWrapper}>
       <Box className={classes.HeaderWrapper}>
         <Header />
