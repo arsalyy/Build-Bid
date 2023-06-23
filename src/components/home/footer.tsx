@@ -9,6 +9,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import CopyrightIcon from '@mui/icons-material/Copyright'
 import { useMediaQuery } from 'react-responsive'
 import Logo from '../../images/logo-black.png'
+import { Link } from 'react-router-dom'
 
 const Footer: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
@@ -57,22 +58,22 @@ const Footer: React.FC = () => {
       <div className="footer-right">
         <p style={{ color: '#798099' }} className="footer-company-about">
           <span style={{ color: '#000000' }}>About the company</span>
-          Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit
-          amet.
+          Build-Bid offers a seamless and transparent experience for users seeking to connect with reliable builders. By providing
+          instant price quotes and detailed cost analysis, we empower users to make informed decisions.
         </p>
         <div className="footer-icons">
-          <a href="#">
+          <Link to="https://facebook.com/" target="_blank">
             <FacebookIcon fontSize="small" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="https://twitter.com/" target="_blank">
             <TwitterIcon fontSize="small" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="https://linkedin.com/" target="_blank">
             <LinkedInIcon fontSize="small" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="https://github.com/" target="_blank">
             <GitHubIcon fontSize="small" />
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

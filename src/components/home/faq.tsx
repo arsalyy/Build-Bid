@@ -44,25 +44,28 @@ const FAQ: React.FC = () => {
 
   const faqs = [
     {
-      heading: 'Heading # 1',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+      heading: 'What is included in the grey structure?',
+      content: `Items like foundation, walls, roof, cement, plaster to wall, underground water tank, septic tank are included in the grey structure. Electrical wiring and plumbing are also included in the grey structure, but can be optional.`
     },
     {
-      heading: 'Heading # 2',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+      heading: 'How can I be sure that the builders on Build-Bid are reliable?',
+      content: `Build-Bid ensures the reliability of builders by verifying their authorization and certification. Only authorized and certified builders are allowed to bid on projects. Additionally, Build-Bid provides user reviews and ratings, allowing you to make an informed decision when selecting a builder.`
     },
     {
-      heading: 'Heading # 3',
-      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+      heading: 'How can Build-Bid help me save time and effort during the construction process?',
+      content: `Build-Bid eliminates the need for you to meet with multiple builders in person and discuss your ideas individually. By providing all the necessary information online, including instant price quotes and access to reliable builders, Build-Bid streamlines the process, saving you valuable time and effort.`
+    },
+    {
+      heading: 'Can Build-Bid assist me in finding specialized builders for unique construction projects?',
+      content: `Build-Bid connects you with a wide network of builders with expertise in various specialized areas, such as eco-friendly construction, historic restoration, or smart home integration. You can specify your requirements, and the platform will match you with builders who have experience in those specific areas.`
+    },
+    {
+      heading: 'How does the bidding feature on Build-Bid benefit me as a user?',
+      content: `The bidding feature on Build-Bid allows multiple builders to submit their proposals and cost estimates for your project. This competitive process enables you to compare different options, negotiate prices, and select the best bid that meets your budget and quality expectations.`
+    },
+    {
+      heading: 'Is Build-Bid available in my geographic area?',
+      content: `Build-Bid aims to serve customers across various locations. The platform continues to expand its network of builders, and the availability may vary based on your specific region. You can create an account and provide your location to check if Build-Bid is currently available in your area.`
     }
   ]
 

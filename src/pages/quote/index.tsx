@@ -5,16 +5,21 @@ import Header from 'components/shared/header'
 import EstimationBreakdown from 'components/quote/estimationBreakdown'
 import BidBox from 'components/quote/bidBox'
 import Transition from 'components/quote/transition'
-import { getQuotePayload } from 'utilities'
-import { useSelector } from 'react-redux'
+import { getQuotePayload, comparePayloadForApiCall } from 'utilities'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { QUOTE_ENDPOINT } from '../../constants'
+import { setQuoteReducer } from 'actions/quoteAction'
 
 const Quote: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const [isQuoteLoading, setIsQuoteLoading] = useState<boolean>(false)
   const [secondImage, setSecondImage] = useState<boolean>(false)
   const state = useSelector((state) => state)
+  const dispatch = useDispatch()
+  const quoteId = useSelector((state) => state.quoteReducer._id)
+  const quote = useSelector((state) => state.quoteReducer.quote)
+  const data = useSelector((state) => state.quoteReducer)
 
   const MyTitle = styled(Typography)({
     fontWeight: 800,
@@ -64,31 +69,18 @@ const Quote: React.FC = () => {
     }
   })()
 
-  const estimations = [
-    {
-      name: 'Bricks, Cement, Sand and Crush',
-      price: 384.08
-    },
-    {
-      name: 'Excavation & Steel Reinforcement',
-      price: 160.08
-    },
-    {
-      name: 'Labor Cost',
-      price: 180.08
-    }
-  ]
-
   const onMount = async () => {
     const payload = getQuotePayload(state)
 
-    try {
-      const res = await axios.post(`${QUOTE_ENDPOINT}/create`, {
-        ...payload
-      })
-      if (res.status === 200) console.log('XXX res', res)
-    } catch (error) {
-      console.error(error)
+    if (!quoteId || quoteId === '' || comparePayloadForApiCall(payload, data)) {
+      try {
+        const res = await axios.post(`${QUOTE_ENDPOINT}/create`, {
+          ...payload
+        })
+        if (res.status === 200) dispatch(setQuoteReducer(res.data.body))
+      } catch (error) {
+        console.error(error)
+      }
     }
 
     setTimeout(() => {
@@ -117,7 +109,10 @@ const Quote: React.FC = () => {
         <Grid container>
           <Grid item md={6} lg={8} xs={12} sm={12}>
             <Box style={{ maxWidth: '731px' }}>
-              <MyTitle variant="h2">1 Kanal</MyTitle>
+              <MyTitle variant="h2">
+                {data?.areaInMarla} Marla (
+                {data?.generalQuestions?.storey?.charAt(0).toUpperCase() + data?.generalQuestions?.storey?.slice(1)} Storey)
+              </MyTitle>
               <MySubtitle variant="h3">
                 Your project is estimated under the &nbsp;
                 <PolicyTypography variant="h3">Build-Bid House Estimation Policy.</PolicyTypography>
@@ -125,26 +120,35 @@ const Quote: React.FC = () => {
               <MyEstimationTitle className={classes.estimation} variant="h4">
                 <>
                   This Estimation includes&nbsp;
-                  <span style={{ fontWeight: 600 }}>Labor Cost</span>,&nbsp;<span style={{ fontWeight: 600 }}>Material Cost</span>
-                  ,&nbsp;
-                  <span style={{ fontWeight: 600 }}>Equipment Expenses</span>&nbsp;and other&nbsp;
-                  <span style={{ fontWeight: 600 }}>Miscellaneous Expenses</span>
-                  &nbsp;as well.
+                  {data?.quote?.breakdown?.map((item, index) => (
+                    <>
+                      <span key={index} style={{ fontWeight: 600 }}>
+                        {item.label}
+                      </span>
+                      {data?.quote?.breakdown?.length - 1 === index ? (
+                        <>.</>
+                      ) : data?.quote?.breakdown?.length - 2 === index ? (
+                        <>&nbsp;and&nbsp;</>
+                      ) : (
+                        <>,&nbsp;</>
+                      )}
+                    </>
+                  ))}
                 </>
               </MyEstimationTitle>
               <Box>
                 <Box style={{ marginTop: isMobile ? '25px' : '40px' }}>
                   <Typography style={{ fontWeight: 500 }}>YOU HAVE ESTIMATION FOR</Typography>
                 </Box>
-                {estimations?.map((estimate, index) => {
-                  return <EstimationBreakdown key={index} name={estimate.name} price={estimate.price} />
+                {data?.quote?.breakdown?.map((item, index) => {
+                  return <EstimationBreakdown key={index} name={item.label} price={item.cost} data={item} />
                 })}
               </Box>
             </Box>
           </Grid>
           <Grid md={6} lg={4} xs={12} sm={12} style={{ marginTop: isMobile ? '30px' : '' }}>
             <Box className={classes.payBox}>
-              <BidBox lowest={450.0} highest={850.0} />
+              <BidBox price={quote?.price ?? 0} range={quote?.range} />
             </Box>
           </Grid>
         </Grid>

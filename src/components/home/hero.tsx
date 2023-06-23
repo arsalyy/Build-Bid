@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
       fontWeight: 400,
       position: 'relative',
       display: 'flex',
-      padding: '50px 90px',
+      padding: isMobile ? '50px 25px' : '50px 90px',
       textAlign: isMobile ? 'center' : 'start'
     },
     heading: {

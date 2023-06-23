@@ -49,8 +49,8 @@ export const getDetailsData = () => {
       title: 'Which grade of bricks would you prefer to use for your project?',
       options: [
         { id: 'gradeA', value: 'Grade - A ' },
-        { id: 'gardeB', value: 'Grade - B' },
-        { id: 'gardeC', value: 'Grade - C' }
+        { id: 'gradeB', value: 'Grade - B' },
+        { id: 'gradeC', value: 'Grade - C' }
       ]
     },
     {
@@ -174,3 +174,28 @@ export const getFloorPlan = (marla: number): IFloorPlan => {
       return {} as IFloorPlan
   }
 }
+
+export const units = ['', 'Thousand', 'Million', 'Billion', 'Trillion', 'Quadrillion']
+export const words = [
+  'Zero',
+  'One',
+  'Two',
+  'Three',
+  'Four',
+  'Five',
+  'Six',
+  'Seven',
+  'Eight',
+  'Nine',
+  'Ten',
+  'Eleven',
+  'Twelve',
+  'Thirteen',
+  'Fourteen',
+  'Fifteen',
+  'Sixteen',
+  'Seventeen',
+  'Eighteen',
+  'Nineteen'
+]
+export const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']

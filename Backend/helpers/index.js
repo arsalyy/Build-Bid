@@ -250,8 +250,17 @@ const generateQuote = async (marla, generalQuestions, securityQuestions) => {
     })
   }
 
+  let totalPrice = 0
+  breakdown.forEach((item) => {
+    if (!isNaN(item.cost)) totalPrice += item.cost
+  })
+
   return {
-    price: bricksCementSandCrush.cost + excavationAndSteel.cost + insulationAndProofing.cost + laborCost.cost,
+    price: totalPrice,
+    range: {
+      min: totalPrice - (totalPrice * 10) / 100,
+      max: totalPrice + (totalPrice * 10) / 100
+    },
     breakdown
   }
 }

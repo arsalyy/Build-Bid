@@ -4,6 +4,10 @@ const quotesSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   quote: {
     price: Number,
+    range: {
+      min: Number,
+      max: Number
+    },
     breakdown: [
       {
         name: String,
@@ -47,6 +51,8 @@ const quotesSchema = new mongoose.Schema({
     storey: String,
     brick: String,
     cement: String,
+    sand: String,
+    crush: String,
     plumbing: String,
     electric: String
   },

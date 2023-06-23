@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles, Typography, Box } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
+import EmptyUser from '../../images/emptyUser.png'
 
 const Team: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 991px)' })
@@ -48,41 +49,41 @@ const Team: React.FC = () => {
         Our Team
       </Typography>
       <Typography style={{ color: 'black', fontWeight: 400, margin: '0px auto', maxWidth: '500px' }} variant="h5">
-        We are a team of insurance geeks, software engineers and actuaries with decades of experience building and launching
-        insurance products, scaling technology products and e-commerce marketplaces.
+        {`We are a team of tech geeks, software engineers and real-estate enthusiasts with years of experience building and launching
+        market competitive, real-estate products, which will target the user's pain points and fix them.`}
       </Typography>
       <Box style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '25px' }}>
         <div className={classes.card}>
           <div className={classes.photo}>
-            <img src="https://picsum.photos/200/300" width={'160px'} height={'160px'} />
+            <img src={EmptyUser} width={'160px'} height={'160px'} />
           </div>
           <Typography className={classes.name} variant="h4">
             Muhammad Arsal
           </Typography>
           <Typography style={{ color: '#798099' }} variant="h3">
-            Role
+            Front-End Developer & DB Administrator
           </Typography>
         </div>
         <div className={classes.card}>
           <div className={classes.photo}>
-            <img src="https://picsum.photos/200/300" width={'160px'} height={'160px'} />
+            <img src={EmptyUser} width={'160px'} height={'160px'} />
           </div>
           <Typography className={classes.name} variant="h4">
             Amad Haseeb
           </Typography>
           <Typography style={{ color: '#798099' }} variant="h3">
-            Role
+            Back-End Developer & Software Quality Engineer
           </Typography>
         </div>
         <div className={classes.card}>
           <div className={classes.photo}>
-            <img src="https://picsum.photos/200/300" width={'160px'} height={'160px'} />
+            <img src={EmptyUser} width={'160px'} height={'160px'} />
           </div>
           <Typography className={classes.name} variant="h4">
             Hamza Zulfiqar
           </Typography>
           <Typography style={{ color: '#798099' }} variant="h3">
-            Role
+            UI/UX Designer & System Architect
           </Typography>
         </div>
       </Box>

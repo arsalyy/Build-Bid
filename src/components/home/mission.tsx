@@ -19,11 +19,11 @@ const Mission: React.FC = () => {
         Our Mission
       </Typography>
       <Typography style={{ color: 'white', fontWeight: 200, margin: '0px auto', maxWidth: '500px' }} variant="h5">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s
-        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-        specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-        passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        {`Build-Bid's ability to provide rapid and accurate cost estimations, ensuring users can make informed decisions and
+        progress smoothly with their residential construction projects.`}
+        <br />
+        <br />
+        {`We want to become the go-to one-stop solution for both; the customers (which want to build their house) and the builders (who want to take on projects to sustain their business).`}
       </Typography>
     </div>
   )

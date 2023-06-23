@@ -27,3 +27,9 @@ export function setFloorPlan(data: IFloorPlan) {
     payload: data
   }
 }
+
+export function emptyDetailsReducer() {
+  return {
+    type: 'EMPTY_DETAILS_REDUCER'
+  }
+}

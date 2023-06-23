@@ -25,6 +25,8 @@ import { useNavigate } from 'react-router-dom'
 import OTPModal from '../../components/shared/otpModal'
 import VerificationModal from '../../components/shared/verificationModal'
 import WaitModal from '../../components/shared/waitModal'
+import Logo from '../../images/LOGO.svg'
+import { Link } from 'react-router-dom'
 
 const MyFormControlBox = styled(FormControlLabel)({
   marginLeft: 0,
@@ -81,6 +83,14 @@ const SignUp: React.FC = () => {
   useEffect(() => setPasswordError(false), [password])
   useEffect(() => setNameError(false), [name])
   useEffect(() => setTypeError(false), [type])
+
+  const MyLink = styled(Link)({
+    cursor: 'pointer',
+    color: primaryColor,
+    '&:hover': {
+      color: primaryColor
+    }
+  })
 
   const classes = makeStyles({
     pageBox: {
@@ -282,14 +292,16 @@ const SignUp: React.FC = () => {
       {vModal && <VerificationModal />}
       {wModal && <WaitModal />}
       <Box sx={{ width: '100%' }} className={classes.leftBox}>
-        <img
-          style={{
-            width: isMobile ? '35px' : '45px',
-            height: isMobile ? '35px' : '45px',
-            marginLeft: isMobile ? '20px' : '100px'
-          }}
-          src="/images/logo.png"
-        />
+        <MyLink to="/">
+          <img
+            style={{
+              width: isMobile ? '35px' : '45px',
+              height: isMobile ? '35px' : '45px',
+              marginLeft: isMobile ? '20px' : '100px'
+            }}
+            src={Logo}
+          />
+        </MyLink>
         <Box className={classes.content}>
           <Box
             style={{

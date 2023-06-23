@@ -40,8 +40,12 @@ const AllBids: React.FC = () => {
   })()
 
   const callApi = async () => {
-    const res = await axios.post(`${QUOTE_ENDPOINT}/findMany`)
-    setQuotes(res.data['quotes'])
+    try {
+      const res = await axios.post(`${QUOTE_ENDPOINT}/findMany`)
+      setQuotes(res.data['quotes'])
+    } catch (e) {
+      console.log(e)
+    }
     setLoading(false)
   }
 

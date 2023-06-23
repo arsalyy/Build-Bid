@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import { ROUTES } from '../../constants'
 import { parseQuery } from '../../utilities'
+import Logo from '../../images/LOGO.svg'
 
 interface IHeader {
   viewType?: string
@@ -230,7 +231,7 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
         </IconButton>
         <Box>
           <MyLink onClick={() => navigate('/')} underline="none">
-            <img src="" width={'35px'} height={'35px'} />
+            <img src={Logo} width={'35px'} height={'35px'} />
           </MyLink>
         </Box>
         <Box>
@@ -299,7 +300,7 @@ const Header: React.FC<IHeader> = (props: IHeader) => {
         <Grid className={classes.menuWrapper}>
           <Box style={{ float: 'left' }}>
             <MyLink onClick={() => navigate('/')} underline="none">
-              <img src="" width={'45px'} height={'45px'} />
+              <img src={Logo} width={'45px'} height={'45px'} />
             </MyLink>
           </Box>
           <Box style={{ display: 'flex', float: 'right', alignItems: 'center' }}>

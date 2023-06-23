@@ -42,10 +42,14 @@ const MyQuotes: React.FC = () => {
   })()
 
   const callApi = async () => {
-    const res = await axios.post(`${QUOTE_ENDPOINT}/myQuotes`, {
-      user: userId
-    })
-    setQuotes(res.data['quotes'])
+    try {
+      const res = await axios.post(`${QUOTE_ENDPOINT}/myQuotes`, {
+        user: userId
+      })
+      setQuotes(res.data['quotes'])
+    } catch (e) {
+      console.log(e)
+    }
     setLoading(false)
   }
 

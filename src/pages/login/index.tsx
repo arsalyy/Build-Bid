@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../actions/userAction'
 import { Link, useNavigate } from 'react-router-dom'
 import OTPModal from '../../components/shared/otpModal'
+import Logo from '../../images/LOGO.svg'
 
 const Login: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
@@ -181,14 +182,16 @@ const Login: React.FC = () => {
     <Box className={classes.pageBox}>
       {showModal && <OTPModal />}
       <Box sx={{ width: '100%' }} className={classes.leftBox}>
-        <img
-          style={{
-            width: isMobile ? '35px' : '45px',
-            height: isMobile ? '35px' : '45px',
-            marginLeft: isMobile ? '20px' : '100px'
-          }}
-          src="/images/logo.png"
-        />
+        <MyLink to="/">
+          <img
+            style={{
+              width: isMobile ? '35px' : '45px',
+              height: isMobile ? '35px' : '45px',
+              marginLeft: isMobile ? '20px' : '100px'
+            }}
+            src={Logo}
+          />
+        </MyLink>
         <Box className={classes.content}>
           <Box
             style={{

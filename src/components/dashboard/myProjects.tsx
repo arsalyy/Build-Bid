@@ -43,11 +43,15 @@ const MyProjects: React.FC = () => {
   })()
 
   const callApi = async () => {
-    const res = await axios.post(`${PROJECT_ENDPOINT}/myProjects`, {
-      user: userId,
-      type: userType
-    })
-    setProjects(res.data['projects'])
+    try {
+      const res = await axios.post(`${PROJECT_ENDPOINT}/myProjects`, {
+        user: userId,
+        type: userType
+      })
+      setProjects(res.data['projects'])
+    } catch (e) {
+      console.log(e)
+    }
     setLoading(false)
   }
 

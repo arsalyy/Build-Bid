@@ -23,18 +23,17 @@ const Company: React.FC = () => {
       <Box style={{ width: '50%' }}>
         <Box style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           <Typography style={{ color: 'black', fontWeight: 200, margin: '0px auto' }} variant="h5">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s
-            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-            type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Build-Bid is an innovative web-based platform that simplifies the construction process by connecting users with
+            reliable builders. Our one-stop solution eliminates the need for multiple in-person meetings and streamlines the
+            process of obtaining cost estimates. With instant price quotes and detailed cost analysis, users can make informed
+            decisions and choose the best builder for their project. We ensure the reliability of builders by verifying their
+            authorization and certification. Through our secure platform, users can communicate directly with builders, fostering
+            collaboration. Join Build-Bid today and experience a transparent, efficient, and hassle-free construction journey.
           </Typography>
           <Typography style={{ color: 'black', fontWeight: 200, margin: '0px auto' }} variant="h5">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s
-            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-            type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-            passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            {`The core strength of Build-Bid is providing quick and efficient cost estimations for residential construction projects
+            Build-Bid's ability to provide rapid and accurate cost estimations, ensuring users can make informed decisions and
+            progress smoothly with their residential construction projects.`}
           </Typography>
         </Box>
       </Box>

@@ -1,6 +1,8 @@
 import { IReduxState } from 'interfaces/IReduxState'
 import { IFloorPlan } from 'interfaces/details/IDetails'
 import qs from 'query-string'
+import { units, words, tens } from '../constants'
+import { IQuotePayload, IQuoteReducer } from 'interfaces/quote/IQuote'
 
 export const inputShadowStyle = { WebkitBoxShadow: '0 0 0 1000px white inset' }
 
@@ -32,10 +34,10 @@ export const reduceToSingleStorey = (val: IFloorPlan): IFloorPlan => {
   }
 }
 
-export const getQuotePayload = (state: IReduxState) => {
+export const getQuotePayload = (state: IReduxState): IQuotePayload => {
   return {
     user: state.userReducer.id,
-    area: state.startReducer.area,
+    area: Number(state.startReducer.area),
     areaInMarla: squareMeterToMarla(state.startReducer.area),
     floorPlan: state.detailsReducer.floorPlan,
     generalQuestions: {
@@ -57,4 +59,63 @@ export const getQuotePayload = (state: IReduxState) => {
         state.detailsReducer.securityQuestions.find((q) => q.id === '7afd3acd-584b-44da-ab2d-0a9a0f87b421')?.answer ?? 'no'
     }
   }
+}
+
+export const numberToText = (number: number): string => {
+  if (number === 0) {
+    return 'Zero'
+  }
+  let text = ''
+  let i = 0
+  while (number > 0) {
+    if (number % 1000 !== 0) {
+      let temp = number % 1000
+      let tempText = ''
+      if (temp >= 100) {
+        tempText += words[Math.floor(temp / 100)] + ' Hundred '
+        temp = temp % 100
+      }
+      if (temp >= 20) {
+        tempText += tens[Math.floor(temp / 10)] + ' '
+        temp = temp % 10
+      }
+      if (temp > 0) {
+        tempText += words[temp] + ' '
+      }
+      text = tempText + units[i] + ' ' + text
+    }
+    number = Math.floor(number / 1000)
+    i++
+  }
+  return text.trim() + ' Rupee'
+}
+
+export const convertToMillion = (number: number): number => number / 1000000
+
+export const comparePayloadForApiCall = (payload: IQuotePayload, state: IQuoteReducer): boolean => {
+  if (Number(payload.area) !== Number(state.area)) return true
+  if (Number(payload.areaInMarla) !== Number(state.areaInMarla)) return true
+
+  if (payload.user !== state.user) return true
+
+  if (Number(payload.floorPlan.bathroom) !== Number(state.floorPlan.bathroom)) return true
+  if (Number(payload.floorPlan.bedroom) !== Number(state.floorPlan.bedroom)) return true
+  if (Number(payload.floorPlan.carParkingSpace) !== Number(state.floorPlan.carParkingSpace)) return true
+  if (Number(payload.floorPlan.drawingRoom) !== Number(state.floorPlan.drawingRoom)) return true
+  if (Number(payload.floorPlan.kitchen) !== Number(state.floorPlan.kitchen)) return true
+  if (Number(payload.floorPlan.livingRoom) !== Number(state.floorPlan.livingRoom)) return true
+
+  if (payload.generalQuestions.brick !== state.generalQuestions.brick) return true
+  if (payload.generalQuestions.cement !== state.generalQuestions.cement) return true
+  if (payload.generalQuestions.crush !== state.generalQuestions.crush) return true
+  if (payload.generalQuestions.electric !== state.generalQuestions.electric) return true
+  if (payload.generalQuestions.plumbing !== state.generalQuestions.plumbing) return true
+  if (payload.generalQuestions.sand !== state.generalQuestions.sand) return true
+  if (payload.generalQuestions.storey !== state.generalQuestions.storey) return true
+
+  if (payload.securityQuestions.considerationsOrChallenges !== state.securityQuestions.considerationsOrChallenges) return true
+  if (payload.securityQuestions.permitsOrApprovals !== state.securityQuestions.permitsOrApprovals) return true
+  if (payload.securityQuestions.restrictionsOrRegulations !== state.securityQuestions.restrictionsOrRegulations) return true
+
+  return false
 }

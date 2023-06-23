@@ -5,24 +5,22 @@ const { generateQuote } = require('../helpers')
 
 const create = async (req, res) => {
   const { user, area, areaInMarla, floorPlan, generalQuestions, securityQuestions } = req.body
-
   const quote = await generateQuote(areaInMarla, generalQuestions, securityQuestions)
 
-  const newQuote = new Quote({
-    user: user,
-    quote: quote,
-    area: area,
-    areaInMarla: areaInMarla,
-    floorPlan: floorPlan,
-    generalQuestions: generalQuestions,
-    securityQuestions: securityQuestions
-  })
-
   try {
-    const result = await newQuote.save()
+    const newQuote = new Quote({
+      user: user,
+      quote: quote,
+      area: area,
+      areaInMarla: areaInMarla,
+      floorPlan: floorPlan,
+      generalQuestions: generalQuestions,
+      securityQuestions: securityQuestions
+    })
+
     return res.status(200).send({
       message: 'Quote Created',
-      body: result
+      body: newQuote
     })
   } catch (e) {
     return res.status(500).send({
@@ -74,8 +72,28 @@ const myQuotes = async (req, res) => {
   }
 }
 
+const post = async (req, res) => {
+  try {
+    const newQuote = new Quote({
+      ...req.body
+    })
+
+    await newQuote.save()
+
+    return res.status(200).send({
+      message: 'Quote Created',
+      body: newQuote
+    })
+  } catch (e) {
+    return res.status(500).send({
+      message: e
+    })
+  }
+}
+
 module.exports = {
   create,
   getAllQuotes,
-  myQuotes
+  myQuotes,
+  post
 }

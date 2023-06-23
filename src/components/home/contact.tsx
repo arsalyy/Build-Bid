@@ -62,8 +62,8 @@ const ContactUs: React.FC = () => {
         Contact us
       </Typography>
       <Typography style={{ color: 'black', fontWeight: 400, margin: '0px auto', maxWidth: '500px' }} variant="h5">
-        Give us, or our insurance partner, a call or drop us a line at any time. Our teams will endeavour to answer all enquiries
-        within 24 hours on business days.
+        {`Give us a call or drop us a line at any time. Our teams will endeavour to answer all enquiries
+        within 24 hours on business days.`}
       </Typography>
       <Box style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '25px' }}>
         <div className={classes.card}>
@@ -77,8 +77,8 @@ const ContactUs: React.FC = () => {
           </div>
           <div className={classes.bottom}>
             <Typography>
-              For questions relating to our product offering, information handling, policy coverage or anything else, please reach
-              out here.
+              {`For questions relating to our quote offering, information handling, quote coverage items or anything else, please reach
+              out here.`}
             </Typography>
           </div>
         </div>
@@ -93,8 +93,8 @@ const ContactUs: React.FC = () => {
           </div>
           <div className={classes.bottom}>
             <Typography>
-              You can cancel your policy at any time. Simply email us and tell us your business name, reason for cancelling, and
-              we&apos;ll do the rest for you.
+              {`You can cancel your project at any time. Simply email us and tell us your information, reason for cancelling, and
+              we'll do the rest for you.`}
             </Typography>
           </div>
         </div>
@@ -109,8 +109,8 @@ const ContactUs: React.FC = () => {
           </div>
           <div className={classes.bottom}>
             <Typography>
-              If you&apos;re unhappy with the service you&apos;ve received by us or our insurance partner and wish to make a
-              complaint, email us here.
+              {`If you're unhappy with the service you've received by us or from our quote details, and wish to make a
+              complaint, email us here.`}
             </Typography>
           </div>
         </div>

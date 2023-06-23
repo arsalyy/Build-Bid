@@ -42,10 +42,14 @@ const MyBids: React.FC = () => {
   })()
 
   const callApi = async () => {
-    const res = await axios.post(`${BID_ENDPOINT}/myBids`, {
-      user: userId
-    })
-    setBids(res.data['bids'])
+    try {
+      const res = await axios.post(`${BID_ENDPOINT}/myBids`, {
+        user: userId
+      })
+      setBids(res.data['bids'])
+    } catch (e) {
+      console.log(e)
+    }
     setLoading(false)
   }
 

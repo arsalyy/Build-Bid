@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { Box, styled, Typography, Link, makeStyles, useTheme, withStyles, Tooltip, Button } from '@material-ui/core'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
@@ -8,6 +8,15 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { ITheme } from 'interfaces/shared/ITheme'
 
 import Bot from './bot'
+import { convertToMillion, numberToText } from '../../utilities'
+import WhiteLoader from '../../images/whiteLoader.png'
+import axios from 'axios'
+import { QUOTE_ENDPOINT } from '../../constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { emptyQuoteReducer } from 'actions/quoteAction'
+import { setArea } from 'actions/startAction'
+import { emptyDetailsReducer } from 'actions/detailsAction'
 
 const MyEstimationPrice = styled(Typography)({
   color: '#252A41',
@@ -40,16 +49,23 @@ const StyledTooltip = withStyles({
 })(Tooltip)
 
 export interface IBidBox {
-  lowest: number
-  highest: number
+  price: number
+  range: {
+    min: number
+    max: number
+  }
 }
 
 const BidBox: React.FC<IBidBox> = (props) => {
-  const { lowest } = props
+  const { price, range } = props
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
+  const [disable, setDisabled] = useState<boolean>(false)
 
   const secondaryColor = useTheme<ITheme>().palette.secondary.main
   const primaryColor = useTheme<ITheme>().palette.primary.main
+  const quoteReducer = useSelector((state) => state.quoteReducer)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const classes = makeStyles(() => {
     return {
@@ -82,12 +98,35 @@ const BidBox: React.FC<IBidBox> = (props) => {
 
   const primaryTextColor = useTheme<ITheme>().text.primary
 
+  const makeApiCall = async () => {
+    try {
+      const res = await axios.post(`${QUOTE_ENDPOINT}/post`, {
+        ...quoteReducer
+      })
+      if (res.status === 200) {
+        dispatch(emptyQuoteReducer())
+        dispatch(setArea(''))
+        dispatch(emptyDetailsReducer())
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
+    setDisabled(false)
+  }
+
   const interestButton = () => {
     return (
       <Button
         id="bid"
-        onClick={() => null}
-        disabled={false}
+        onClick={() => {
+          setDisabled(true)
+          setTimeout(() => {
+            makeApiCall()
+          }, 3000)
+        }}
+        disabled={disable}
         color="primary"
         style={{
           width: '100%',
@@ -98,7 +137,7 @@ const BidBox: React.FC<IBidBox> = (props) => {
         }}
         variant="contained">
         <Typography style={{ color: primaryTextColor, fontWeight: 500 }} variant="h5">
-          Post Bid
+          Post Quote {disable && <img width="50px" height="50px" src={WhiteLoader} />}
         </Typography>
       </Button>
     )
@@ -106,20 +145,34 @@ const BidBox: React.FC<IBidBox> = (props) => {
 
   const perMonthPerYear = () => {
     return (
-      <MyEstimationPrice
-        style={{
-          color: '#252A41',
-          margin: '',
-          fontWeight: 900,
-          fontSize: ''
-        }}
-        variant={'h1'}>
-        Rs {Math.floor(lowest)}
-        <Typography variant={'h3'} style={{ fontWeight: 600, marginLeft: '0.5rem', marginBottom: '1.2rem' }}>
-          .{lowest.toFixed(2).split('.')[1]}
-        </Typography>
-        &nbsp;L
-      </MyEstimationPrice>
+      <>
+        <MyEstimationPrice
+          style={{
+            color: '#252A41',
+            margin: '',
+            fontWeight: 900,
+            fontSize: ''
+          }}
+          variant={'h1'}>
+          {Math.floor(convertToMillion(price))}
+          <Typography variant={'h3'} style={{ fontWeight: 600, marginLeft: '0.5rem', marginBottom: '1.2rem' }}>
+            .{convertToMillion(price).toFixed(2).split('.')[1]}
+          </Typography>
+          <Typography variant={'h3'} style={{ fontWeight: 600, marginLeft: '0.5rem' }}>
+            Million PKR
+          </Typography>
+        </MyEstimationPrice>
+        <MyEstimationContentCenter style={{ textDecoration: 'underline', margin: 'auto', textAlign: 'center' }} variant="body1">
+          {numberToText(price)}
+        </MyEstimationContentCenter>
+        <MyEstimationPrice
+          style={{
+            marginTop: '20px',
+            fontSize: '20px'
+          }}>
+          {range?.min?.toLocaleString()} &#8212; {range?.max?.toLocaleString()}
+        </MyEstimationPrice>
+      </>
     )
   }
 

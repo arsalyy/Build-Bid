@@ -28,6 +28,9 @@ export function detailsReducer(state = initialState, action) {
         ...state,
         floorPlan: action.payload
       }
+    case 'EMPTY_DETAILS_REDUCER': {
+      return { generalQuestions: [], securityQuestions: [], floorPlan: undefined }
+    }
     default:
       return state
   }
