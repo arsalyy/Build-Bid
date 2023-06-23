@@ -21,6 +21,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import axios from 'axios'
 import { PROJECT_ENDPOINT } from '../../constants'
 import { useToasts } from 'react-toast-notifications'
+import { IQuote } from '../../interfaces/quote/IQuote'
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -46,11 +47,8 @@ interface IBid {
 }
 
 interface IQuoteCard {
-  quote: {
-    _id: string
-    user: string
-    price: number
-    bids: IBid[]
+  quote: IQuote & {
+    bids: {}[]
   }
   callBack: () => void
 }
@@ -106,29 +104,29 @@ const QuoteCard: React.FC<IQuoteCard> = ({ quote, callBack }) => {
           <Box style={{ display: isMobile ? '' : 'flex', justifyContent: 'space-between' }}>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: isMobile ? '100%' : '60%' }}>
               <Typography component="div" variant="h5">
-                1 Kanal House
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Bahria Town, Lahore
+                {quote.areaInMarla} {' Marla House'}
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div">
                 Status: <span style={{ color: primaryColor }}>Live</span>
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div">
-                Our Estimated Price: <span style={{ color: primaryColor, fontWeight: 'bold' }}>$ 30,50,000</span>
+                Our Estimated Price:{' '}
+                <span style={{ color: primaryColor, fontWeight: 'bold' }}>
+                  {quote.quote.price.toLocaleString()} {' PKR'}
+                </span>
               </Typography>
               <Box style={{ display: 'flex', gap: '15px' }}>
                 <Box>
                   <BedOutlinedIcon />
-                  &nbsp;2 Bed
+                  {quote?.floorPlan?.bedroom} {' Bed'}
                 </Box>
                 <Box>
                   <BathtubOutlinedIcon />
-                  &nbsp;3 Bath
+                  {quote?.floorPlan?.bathroom} {' Bath'}
                 </Box>
                 <Box>
                   <TimeToLeaveOutlinedIcon />
-                  &nbsp;4 Parking
+                  {quote?.floorPlan?.carParkingSpace} {' Parking'}
                 </Box>
               </Box>
             </Box>
@@ -170,7 +168,7 @@ const QuoteCard: React.FC<IQuoteCard> = ({ quote, callBack }) => {
                     fontWeight: 'bolder',
                     color: primaryColor
                   }}>
-                  {quote.bids[0]?.amount ?? 0}
+                  {(quote.bids[0] as any)?.amount ?? 0}
                 </Typography>
               </Box>
             </Box>

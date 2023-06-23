@@ -21,6 +21,7 @@ import axios from 'axios'
 import { BID_ENDPOINT } from '../../constants'
 import { useSelector } from 'react-redux'
 import { useToasts } from 'react-toast-notifications'
+import { IQuote } from 'interfaces/quote/IQuote'
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -28,6 +29,7 @@ interface ExpandMoreProps extends IconButtonProps {
 
 interface IBidCard {
   quoteId: string
+  quote: IQuote
   takeInput: boolean
   bidAmount: number
 }
@@ -52,17 +54,17 @@ const MySearchField = styled(TextField)({
   }
 })
 
-const BidCard: React.FC<IBidCard> = ({ quoteId, takeInput, bidAmount }) => {
-  const [expanded, setExpanded] = useState<boolean>(false)
+const BidCard: React.FC<IBidCard> = ({ quoteId, takeInput, bidAmount, quote }) => {
+  const [expanded] = useState<boolean>(false)
   const [amount, setAmount] = useState<string>()
   const primaryColor = useTheme<ITheme>().palette.primary.main
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const userId = useSelector((state) => state.userReducer.id)
   const { addToast } = useToasts()
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded)
+  // }
 
   const classes = makeStyles(() => {
     return {
@@ -125,29 +127,29 @@ const BidCard: React.FC<IBidCard> = ({ quoteId, takeInput, bidAmount }) => {
           <Box style={{ display: isMobile ? '' : 'flex', justifyContent: 'space-between' }}>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: isMobile ? '100%' : '60%' }}>
               <Typography component="div" variant="h5">
-                1 Kanal House
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Bahria Town, Lahore
+                {quote.areaInMarla} {' Marla House'}
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div">
                 Status: <span style={{ color: primaryColor }}>Live</span>
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div">
-                Our Estimated Price: <span style={{ color: primaryColor, fontWeight: 'bold' }}>$ 30,50,000</span>
+                Our Estimated Price:{' '}
+                <span style={{ color: primaryColor, fontWeight: 'bold' }}>
+                  {quote.quote.price.toLocaleString()} {' PKR'}
+                </span>
               </Typography>
               <Box style={{ display: 'flex', gap: '15px' }}>
                 <Box>
                   <BedOutlinedIcon />
-                  &nbsp;2 Bed
+                  {quote?.floorPlan?.bedroom} {' Bed'}
                 </Box>
                 <Box>
                   <BathtubOutlinedIcon />
-                  &nbsp;3 Bath
+                  {quote?.floorPlan?.bathroom} {' Bath'}
                 </Box>
                 <Box>
                   <TimeToLeaveOutlinedIcon />
-                  &nbsp;4 Parking
+                  {quote?.floorPlan?.carParkingSpace} {' Parking'}
                 </Box>
               </Box>
             </Box>
@@ -223,7 +225,7 @@ const BidCard: React.FC<IBidCard> = ({ quoteId, takeInput, bidAmount }) => {
         </CardContent>
       </Box>
       <CardActions disableSpacing>
-        <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
+        <ExpandMore expand={expanded} onClick={() => null} aria-expanded={expanded} aria-label="show more">
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>

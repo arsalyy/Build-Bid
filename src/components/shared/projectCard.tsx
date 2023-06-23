@@ -18,6 +18,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Table, TableCell, TableContainer, TableHead, TableRow, Paper, TableBody } from '@material-ui/core'
 import CancelIcon from '@mui/icons-material/Cancel'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { IQuote } from 'interfaces/quote/IQuote'
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean
@@ -40,12 +41,6 @@ interface IBid {
   quote: string
   user: IUser
   amount: number
-}
-
-interface IQuote {
-  _id: string
-  user: string
-  price: number
 }
 
 interface IProjectCard {
@@ -76,8 +71,6 @@ const ProjectCard: React.FC<IProjectCard> = ({ bid, builder, user, quote }) => {
     setExpanded(!expanded)
   }
 
-  console.log(builder, user)
-
   return (
     <Card>
       <Box style={{ display: isMobile ? '' : 'flex', maxHeight: isMobile ? '' : '200px' }}>
@@ -91,29 +84,29 @@ const ProjectCard: React.FC<IProjectCard> = ({ bid, builder, user, quote }) => {
           <Box style={{ display: isMobile ? '' : 'flex', justifyContent: 'space-between' }}>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: isMobile ? '100%' : '60%' }}>
               <Typography component="div" variant="h5">
-                1 Kanal House
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary" component="div">
-                Bahria Town, Lahore
+                {quote?.areaInMarla} {' Marla House'}
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div">
                 Status: <span style={{ color: primaryColor }}>Live</span>
               </Typography>
               <Typography variant="subtitle1" color="text.secondary" component="div">
-                Our Estimated Price: <span style={{ color: primaryColor, fontWeight: 'bold' }}>$ 30,50,000</span>
+                Our Estimated Price:{' '}
+                <span style={{ color: primaryColor, fontWeight: 'bold' }}>
+                  {quote.quote.price.toLocaleString()} {' PKR'}
+                </span>
               </Typography>
               <Box style={{ display: 'flex', gap: '15px' }}>
                 <Box>
                   <BedOutlinedIcon />
-                  &nbsp;2 Bed
+                  {quote?.floorPlan?.bedroom} {' Bed'}
                 </Box>
                 <Box>
                   <BathtubOutlinedIcon />
-                  &nbsp;3 Bath
+                  {quote?.floorPlan?.bathroom} {' Bath'}
                 </Box>
                 <Box>
                   <TimeToLeaveOutlinedIcon />
-                  &nbsp;4 Parking
+                  {quote?.floorPlan?.carParkingSpace} {' Parking'}
                 </Box>
               </Box>
             </Box>
@@ -138,7 +131,7 @@ const ProjectCard: React.FC<IProjectCard> = ({ bid, builder, user, quote }) => {
                     fontWeight: 'bolder',
                     color: primaryColor
                   }}>
-                  {quote?.price}
+                  {quote?.quote?.price.toLocaleString()} {' PKR'}
                 </Typography>
               </Box>
               <Box>
@@ -155,7 +148,7 @@ const ProjectCard: React.FC<IProjectCard> = ({ bid, builder, user, quote }) => {
                     fontWeight: 'bolder',
                     color: primaryColor
                   }}>
-                  {bid?.amount}
+                  {bid?.amount.toLocaleString()} {' PKR'}
                 </Typography>
               </Box>
             </Box>

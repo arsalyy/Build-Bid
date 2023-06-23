@@ -45,6 +45,7 @@ const AllBids: React.FC = () => {
       setQuotes(res.data['quotes'])
     } catch (e) {
       console.log(e)
+      setQuotes([])
     }
     setLoading(false)
   }
@@ -85,7 +86,7 @@ const AllBids: React.FC = () => {
       ) : (
         <Box className={classes.listWrapper}>
           {quotes.map((quote, index) => (
-            <BidCard key={index} quoteId={quote.id} takeInput={true} bidAmount={0} />
+            <BidCard key={index} quoteId={quote._id} takeInput={true} bidAmount={0} quote={quote} />
           ))}
         </Box>
       )}

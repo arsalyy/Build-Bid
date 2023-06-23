@@ -51,6 +51,7 @@ const MyProjects: React.FC = () => {
       setProjects(res.data['projects'])
     } catch (e) {
       console.log(e)
+      setProjects([])
     }
     setLoading(false)
   }

@@ -49,6 +49,7 @@ const MyBids: React.FC = () => {
       setBids(res.data['bids'])
     } catch (e) {
       console.log(e)
+      setBids([])
     }
     setLoading(false)
   }
@@ -89,7 +90,7 @@ const MyBids: React.FC = () => {
       ) : (
         <Box className={classes.listWrapper}>
           {bids.map((bid, index) => (
-            <BidCard key={index} quoteId={bid.quote.id} takeInput={false} bidAmount={bid.amount} />
+            <BidCard key={index} quoteId={bid.quote.id} takeInput={false} bidAmount={bid.amount} quote={bid?.quote} />
           ))}
         </Box>
       )}

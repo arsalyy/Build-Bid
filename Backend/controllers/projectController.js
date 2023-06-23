@@ -69,8 +69,10 @@ const myProjects = async (req, res) => {
   try {
     let result
 
-    if (type === 'builder') result = await Project.find({ builder: user }).populate('user', 'bid', 'quote', 'builder')
+    if (type === 'builder')
+      result = await Project.find({ builder: user }).populate('user').populate('bid').populate('quote').populate('builder')
     else result = await Project.find({ user: user }).populate('user').populate('bid').populate('quote').populate('builder')
+
     if (!result || result.length <= 0)
       return res.status(404).send({
         projects: []

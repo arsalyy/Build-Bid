@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Box, makeStyles, Tabs, Tab, Typography } from '@material-ui/core'
 import AllBids from './allBids'
 import MyBids from './myBids'
+import MyProjects from './myProjects'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -54,6 +55,7 @@ const BuildersView: React.FC = () => {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" textColor="primary" indicatorColor="primary">
           <Tab label="All Bids" {...a11yProps(0)} />
           <Tab label="My Bids" {...a11yProps(1)} />
+          <Tab label="My Projects" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -61,6 +63,9 @@ const BuildersView: React.FC = () => {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <MyBids />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <MyProjects />
       </TabPanel>
     </Box>
   )

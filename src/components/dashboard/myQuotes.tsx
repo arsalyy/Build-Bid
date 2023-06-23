@@ -49,6 +49,7 @@ const MyQuotes: React.FC = () => {
       setQuotes(res.data['quotes'])
     } catch (e) {
       console.log(e)
+      setQuotes([])
     }
     setLoading(false)
   }
