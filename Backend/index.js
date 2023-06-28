@@ -5,6 +5,9 @@ const quote = require('./routes/quote')
 const bid = require('./routes/bid')
 const project = require('./routes/project')
 const express = require('express')
+const cron = require('node-cron')
+const { runScrapper } = require('./scrapping')
+
 var cors = require('cors')
 const app = express()
 
@@ -21,6 +24,15 @@ app.use('/api', admin)
 app.use('/api', quote)
 app.use('/api', bid)
 app.use('/api', project)
+
+cron.schedule('0 0 * * *', () => {
+  runScrapper('./scrappers/bricks.py')
+  runScrapper('./scrappers/cement.py')
+  runScrapper('./scrappers/crush.py')
+  runScrapper('./scrappers/labor.py')
+  runScrapper('./scrappers/sand.py')
+  runScrapper('./scrappers/steel.py')
+})
 
 const server = app.listen(4000, () => console.log('Listenng on Port 4000...'))
 
