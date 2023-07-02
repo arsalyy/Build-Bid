@@ -20,6 +20,8 @@ import Search from '../../images/search.png'
 import { ITheme } from 'interfaces/shared/ITheme'
 import Header from 'components/shared/header'
 import { useNavigate } from 'react-router-dom'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { marlaToSquareMeter } from '../../utilities'
 
 const MySearchTitle = styled(Typography)({
   fontStyle: 'normal',
@@ -46,6 +48,7 @@ const Start: React.FC = () => {
   const primaryTextColor = useTheme<ITheme>().text.primary
   const [disable, setDisable] = useState<boolean>(true)
   const navigate = useNavigate()
+  const [converter, setConverter] = useState<string>('')
 
   const classes = makeStyles(() => {
     return {
@@ -115,6 +118,17 @@ const Start: React.FC = () => {
         backgroundColor: '#FFFFFF',
         width: '100%',
         alignItems: 'center'
+      },
+      converterBox: {
+        padding: '20px',
+        maxWidth: isMobile ? '100%' : '334px',
+        boxShadow: '0px 4px 20px rgba(177, 176, 176, 0.18)',
+        borderRadius: '10px'
+      },
+      convertedLabel: {
+        '& .MuiFormControl-root > label': {
+          top: '-4px !important'
+        }
       }
     }
   })()
@@ -168,6 +182,7 @@ const Start: React.FC = () => {
           onChange={(e) => dispatch(setArea(e.target.value))}
           InputProps={{
             classes: { input: classes.input },
+            inputProps: { min: 76 },
             endAdornment: (
               <InputAdornment position="end">
                 {area && (
@@ -193,10 +208,79 @@ const Start: React.FC = () => {
     )
   }
 
+  const areaConverter = () => {
+    const handleKeyPress = (event) => {
+      const keyPressedValue = event.key
+      const currentValue = event.target.value + keyPressedValue
+
+      if (currentValue === '-') event.preventDefault()
+    }
+
+    return (
+      <Box className={classes.converterBox}>
+        <Box display="flex" style={{ flexWrap: 'wrap' }} mb={isMobile ? '0.2rem' : '0.6rem'}>
+          <First variant="h4">Not Sure?</First>
+          <MySearchTitle variant="h4">&nbsp;convert from marla.</MySearchTitle>
+        </Box>
+        <MySearchField
+          className={classes.search}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          label="Marla"
+          type="number"
+          value={converter}
+          onChange={(e) => setConverter(e.target.value)}
+          InputProps={{
+            classes: { input: classes.input },
+            inputProps: { min: 0, onKeyPress: (event) => handleKeyPress(event) },
+            endAdornment: (
+              <InputAdornment position="end">
+                {converter && (
+                  <IconButton onClick={() => setConverter('')} style={{ padding: 3, margin: '0px 10px 5px 0px' }}>
+                    <CancelIcon style={{ color: 'rgba(87, 106, 148, 0.51)' }} />
+                  </IconButton>
+                )}
+              </InputAdornment>
+            )
+          }}
+        />
+        <MySearchField
+          className={classes.search}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          label="Square Meter"
+          id="convertedSquareMeterValue"
+          type="number"
+          value={converter !== '' ? String(marlaToSquareMeter(converter)) : ''}
+          disabled={true}
+          InputProps={{
+            classes: { input: classes.input },
+            endAdornment: (
+              <InputAdornment position="end">
+                {converter && (
+                  <IconButton
+                    onClick={() => navigator.clipboard.writeText(String(marlaToSquareMeter(converter)))}
+                    style={{ padding: 3, margin: '0px 10px 5px 0px' }}>
+                    <ContentCopyIcon style={{ color: 'rgba(87, 106, 148, 0.51)' }} />
+                  </IconButton>
+                )}
+              </InputAdornment>
+            )
+          }}
+        />
+      </Box>
+    )
+  }
+
   const desktopView = () => (
-    <Grid container>
+    <Grid container style={{ justifyContent: 'space-between' }}>
       <Grid item xs={8} md={6} lg={5}>
         <Box style={{ width: '500px' }}>{getSearchView()}</Box>
+      </Grid>
+      <Grid item md={6} lg={4} xs={12} sm={12}>
+        <Box style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>{areaConverter()}</Box>
       </Grid>
     </Grid>
   )
@@ -204,6 +288,7 @@ const Start: React.FC = () => {
   const mobileView = () => (
     <Grid item xs={12}>
       <Box>{getSearchView()}</Box>
+      <Box style={{ width: '100%', marginTop: '50px' }}>{areaConverter()}</Box>
     </Grid>
   )
 

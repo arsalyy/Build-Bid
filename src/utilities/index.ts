@@ -24,6 +24,11 @@ export const squareMeterToMarla = (val: string) => {
   return parseFloat((squareMeter / 25.293).toFixed(2))
 }
 
+export const marlaToSquareMeter = (val: string) => {
+  const marla = parseFloat(val)
+  return parseFloat((marla * 25.293).toFixed(2))
+}
+
 export const reduceToSingleStorey = (val: IFloorPlan): IFloorPlan => {
   return {
     ...val,
