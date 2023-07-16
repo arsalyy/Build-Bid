@@ -53,7 +53,7 @@ const myQuotes = async (req, res) => {
       result.map(async (quote) => {
         const bid = await Bid.find({ quote: quote.id }).populate('user')
 
-        bid.sort((a, b) => b.amount - a.amount)
+        bid.sort((a, b) => a.amount - b.amount)
 
         return {
           ...quote._doc,

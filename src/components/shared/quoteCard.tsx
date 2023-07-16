@@ -160,7 +160,7 @@ const QuoteCard: React.FC<IQuoteCard> = ({ quote, callBack }) => {
                   style={{
                     fontWeight: 500
                   }}>
-                  Highest Bid
+                  Lowest Bid
                 </Typography>
                 <Typography
                   variant="h4"
