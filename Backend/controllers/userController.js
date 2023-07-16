@@ -124,7 +124,7 @@ const sendOTP = async (req, res) => {
   transporter
     .sendMail(message)
     .then(() => {
-      return res.status(400).json({ message: 'OTP sent successfully' })
+      return res.status(200).json({ message: 'OTP sent successfully' })
     })
     .catch((error) => {
       return res.status(500).send('Server error')
@@ -140,6 +140,11 @@ const verifyOTP = async (req, res) => {
     window: 6,
     digits: 4
   })
+
+  if (!userId && verified) {
+    return res.status(200).json({ message: 'OTP Verified' })
+  }
+
   if (verified) {
     const user = await User.findById(userId)
     user.verified = true
@@ -148,6 +153,32 @@ const verifyOTP = async (req, res) => {
     return res.status(200).json({ message: 'OTP Verified' })
   } else {
     return res.status(500).json({ message: 'Error' })
+  }
+}
+
+const resetPassword = async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Invalid Input' })
+  }
+
+  try {
+    const user = await User.findOne({ email: email })
+
+    if (user) {
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+
+      user.password = hashedPassword
+      await user.save()
+
+      return res.status(200).json({ message: 'Password Reset' })
+    } else {
+      return res.status(404).json({ message: 'User not found' })
+    }
+  } catch (e) {
+    return res.status(500).json({ message: 'Server Error' })
   }
 }
 
@@ -174,5 +205,6 @@ module.exports = {
   signup,
   sendOTP,
   verifyOTP,
+  resetPassword,
   uploadFile
 }

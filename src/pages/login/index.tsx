@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../../actions/userAction'
 import { Link, useNavigate } from 'react-router-dom'
 import OTPModal from '../../components/shared/otpModal'
+import PasswordModal from '../../components/shared/passwordModal'
 import Logo from '../../images/LOGO.svg'
 
 const Login: React.FC = () => {
@@ -24,6 +25,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [passwordModal, setPasswordModal] = useState<boolean>(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const loggedIn = useSelector((state) => state.userReducer.verified)
@@ -181,6 +183,7 @@ const Login: React.FC = () => {
   return (
     <Box className={classes.pageBox}>
       {showModal && <OTPModal />}
+      {passwordModal && <PasswordModal />}
       <Box sx={{ width: '100%' }} className={classes.leftBox}>
         <MyLink to="/">
           <img
@@ -217,6 +220,17 @@ const Login: React.FC = () => {
                 lineHeight: 2
               }}>
               Didn&apos;t have an account? Try <MyLink to="/signup">signing-up</MyLink> first.
+            </Typography>
+            <Typography
+              variant="h5"
+              style={{
+                textAlign: isMobile ? 'left' : 'center',
+                lineHeight: 2
+              }}>
+              Forgot Password?{' '}
+              <MyLink to="#" onClick={() => setPasswordModal(true)}>
+                reset here
+              </MyLink>
             </Typography>
             {(emailError || passwordError) && (
               <Box style={{ backgroundColor: '#FFF0F1', alignItems: 'center' }} className={classes.quotation}>
