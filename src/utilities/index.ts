@@ -3,6 +3,8 @@ import { IFloorPlan } from 'interfaces/details/IDetails'
 import qs from 'query-string'
 import { units, words, tens } from '../constants'
 import { IQuotePayload, IQuoteReducer } from 'interfaces/quote/IQuote'
+import { IOption } from 'interfaces/details/IDetails'
+import { IPriceReducer } from 'interfaces/price/IPrice'
 
 export const inputShadowStyle = { WebkitBoxShadow: '0 0 0 1000px white inset' }
 
@@ -123,4 +125,12 @@ export const comparePayloadForApiCall = (payload: IQuotePayload, state: IQuoteRe
   if (payload.securityQuestions.restrictionsOrRegulations !== state.securityQuestions.restrictionsOrRegulations) return true
 
   return false
+}
+
+export const generateTooltipTitle = (options: IOption[], prices: IPriceReducer): string => {
+  let title = ''
+  options.forEach((option) => {
+    title = title.concat(`${option.id.charAt(0).toUpperCase().concat(option.id.slice(1))}: Rs. ${prices[option.id]} per unit\n`)
+  })
+  return title
 }

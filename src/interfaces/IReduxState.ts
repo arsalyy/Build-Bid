@@ -3,6 +3,7 @@ import { IUserReducer } from './user/IUser'
 import { IAdminReducer } from './admin/IAdmin'
 import { IDetailsReducer } from './details/IDetails'
 import { IQuoteReducer } from './quote/IQuote'
+import { IPriceReducer } from './price/IPrice'
 
 export interface IReduxState {
   adminReducer: IAdminReducer
@@ -10,4 +11,5 @@ export interface IReduxState {
   userReducer: IUserReducer
   detailsReducer: IDetailsReducer
   quoteReducer: IQuoteReducer
+  priceReducer: IPriceReducer
 }

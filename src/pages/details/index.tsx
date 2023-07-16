@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { Box, makeStyles, Divider, Grid } from '@material-ui/core'
 import { useMediaQuery } from 'react-responsive'
 import Header from 'components/shared/header'
@@ -7,11 +8,15 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import GeneralQuestions from 'components/details/generalQuestions'
 import SecurityQuestions from 'components/details/securityQuestions'
 import FloorPlanConfirmation from 'components/details/floorPlanConfirmation'
+import { PRICES_ENDPOINT } from '../../constants'
+import { setPrices } from 'actions/priceAction'
+import { useDispatch } from 'react-redux'
 
 const Details: React.FC = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const [step, setStep] = useState<number>(1)
   const location = useLocation()
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const classes = makeStyles(() => {
@@ -38,6 +43,27 @@ const Details: React.FC = () => {
       setStep(stepper)
     }
   }, [location])
+
+  const makeApiCall = async () => {
+    try {
+      const res = await axios.post(`${PRICES_ENDPOINT}/findMany`)
+      if (res.status === 200)
+        dispatch(
+          setPrices({
+            ...res.data.data.bricks.options,
+            ...res.data.data.cement.options,
+            ...res.data.data.sand.options,
+            ...res.data.data.crush.options
+          })
+        )
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    makeApiCall()
+  }, [])
 
   return (
     <Box className={classes.pageBox}>

@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { styled, makeStyles, Typography, RadioGroup, FormControlLabel, Radio, useTheme } from '@material-ui/core'
+import {
+  styled,
+  makeStyles,
+  Typography,
+  RadioGroup,
+  ClickAwayListener,
+  FormControlLabel,
+  Radio,
+  useTheme
+} from '@material-ui/core'
 
 import { ITheme } from 'interfaces/shared/ITheme'
 import { IOption } from 'interfaces/details/IDetails'
+import MyTooltip from '../shared/tooltip'
+import { generateTooltipTitle } from 'utilities'
+import { useSelector } from 'react-redux'
 
 interface IDetailsRadioButtons {
   question: string
@@ -11,6 +23,7 @@ interface IDetailsRadioButtons {
   handleRadioChange(event: any): void
   value: string
   options: IOption[]
+  tooltip?: boolean
 }
 
 const MyOperateQuestion = styled(Typography)({
@@ -25,9 +38,11 @@ const MyFormControlBox = styled(FormControlLabel)({
 })
 
 const DetailsRadioButtonsTripple: React.FC<IDetailsRadioButtons> = (props: IDetailsRadioButtons) => {
-  const { question, handleRadioChange, value, options } = props
+  const { question, handleRadioChange, value, options, tooltip } = props
   const isMobile = useMediaQuery({ query: '(max-width: 960px)' })
   const primaryColor = useTheme<ITheme>().palette.primary.main
+  const [tooltipOpen, setTooltipOpen] = useState<boolean>(false)
+  const prices = useSelector((state) => state.priceReducer)
 
   const classes = makeStyles({
     MyFormControlNotSelectedField: {
@@ -70,9 +85,35 @@ const DetailsRadioButtonsTripple: React.FC<IDetailsRadioButtons> = (props: IDeta
     handleRadioChange(event)
   }
 
+  const handleTooltipClose = () => {
+    setTooltipOpen(false)
+  }
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true)
+  }
+
   return (
     <React.Fragment>
-      <MyOperateQuestion variant="h5">{question}</MyOperateQuestion>
+      <MyOperateQuestion variant="h5">
+        {question}
+        {tooltip && (
+          <ClickAwayListener onClickAway={handleTooltipClose}>
+            <Typography
+              onClick={handleTooltipOpen}
+              style={{
+                marginLeft: '5px',
+                display: 'inline'
+              }}>
+              <MyTooltip
+                state={tooltipOpen}
+                title={generateTooltipTitle(options, prices)}
+                float="none"
+                fontSize={isMobile ? '0.75rem' : ''}
+              />{' '}
+            </Typography>
+          </ClickAwayListener>
+        )}
+      </MyOperateQuestion>
       <RadioGroup id={`details-triple-input`} className={classes.radioWrap} row={true} value={value} onChange={setRadioChange}>
         <MyFormControlBox
           id="details-triple-input-option-1"

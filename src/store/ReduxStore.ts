@@ -14,7 +14,7 @@ const persistConfig = {
   storage,
   version: 0,
   migrate: createMigrate(migrations, { debug: false }),
-  whitelist: ['adminReducer', 'startReducer', 'userReducer', 'detailsReducer', 'quoteReducer']
+  whitelist: ['adminReducer', 'startReducer', 'userReducer', 'detailsReducer', 'quoteReducer', 'priceReducer']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 export const store = createStore(persistedReducer)

@@ -5,6 +5,7 @@ export const ADMIN_ENDPOINT = 'http://localhost:4000/api/admin'
 export const QUOTE_ENDPOINT = 'http://localhost:4000/api/quote'
 export const BID_ENDPOINT = 'http://localhost:4000/api/bid'
 export const PROJECT_ENDPOINT = 'http://localhost:4000/api/project'
+export const PRICES_ENDPOINT = 'http://localhost:4000/api/prices'
 
 export const ROUTES = {
   Home: '/',
@@ -40,7 +41,8 @@ export const getDetailsData = () => {
       options: [
         { id: 'margala', value: 'Margala' },
         { id: 'sarghoda', value: 'Sarghoda' }
-      ]
+      ],
+      tooltip: true
     },
     {
       id: '66ce5487-a027-40fc-95d0-2daab1a3b008',
@@ -51,7 +53,8 @@ export const getDetailsData = () => {
         { id: 'gradeA', value: 'Grade - A ' },
         { id: 'gradeB', value: 'Grade - B' },
         { id: 'gradeC', value: 'Grade - C' }
-      ]
+      ],
+      tooltip: true
     },
     {
       id: '0514056a-d1e2-47ae-9aeb-b7e6fdeaaa6f',
@@ -61,7 +64,8 @@ export const getDetailsData = () => {
       options: [
         { id: 'ravi', value: 'Ravi' },
         { id: 'chenab', value: 'Chenab' }
-      ]
+      ],
+      tooltip: true
     },
     {
       id: '6e4422eb-6461-412c-8e16-c29bdfa2035b',
@@ -72,7 +76,8 @@ export const getDetailsData = () => {
         { id: 'lucky', value: 'Lucky Cement' },
         { id: 'dg', value: 'DG Cement' },
         { id: 'mapleLeaf', value: 'Maple Leaf' }
-      ]
+      ],
+      tooltip: true
     },
     {
       id: '5680e43a-9a1c-4a30-8213-ebeca5e3651e',

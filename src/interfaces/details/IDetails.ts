@@ -10,6 +10,7 @@ export interface IStatement {
   title: string
   answer?: string
   options: Array<IOption>
+  tooltip?: boolean
 }
 
 export type IDetails = IStatement

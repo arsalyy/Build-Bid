@@ -69,6 +69,7 @@ const GeneralQuestions: React.FC = () => {
                 handleRadioChange={(event) => updateAnswer(question, event.target.value, questions)}
                 value={question.answer}
                 options={question.options}
+                tooltip={question.tooltip}
               />
             )
           case 'triple':
@@ -78,6 +79,7 @@ const GeneralQuestions: React.FC = () => {
                 handleRadioChange={(event) => updateAnswer(question, event.target.value, questions)}
                 value={question.answer}
                 options={question.options}
+                tooltip={question.tooltip}
               />
             )
           default:
