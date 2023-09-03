@@ -1,26 +1,62 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+  "awesomeTypescriptLoaderOptions": {
+    "reportFiles": ["./src/**/*"]
   },
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "outDir": "./out/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "target": "es2017",
+    "jsx": "preserve",
+    "declaration": false,
+    "lib": ["dom", "dom.iterable", "esnext", "es6", "es2016"],
+    "baseUrl": "./src/",
+    "allowJs": true,
+    "moduleResolution": "Node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "strict": false,
+    "noEmit": true,
+    "isolatedModules": true,
+    "typeRoots": ["src/@types", "./node_modules/@types"]
+  },
+  "diagnostics": true,
+  "paths": {
+    "@utils": ["utilities"],
+    "@services/*": ["services/*"],
+    "@hooks/*": ["hooks/*"],
+    "@components/*": ["components/*"],
+    "@shared/*": ["components/shared/*"],
+    "@style/*": ["components/style/*"],
+    "@subComponents/*": ["subComponents/*"],
+    "@actions/*": ["actions/*"],
+    "@api": ["api"],
+    "@helpers/*": ["helpers/*"],
+    "@constants": ["./constants"],
+    "@interfaces/*": ["interfaces/*"]
+  },
+  "exclude": ["node_modules"],
   "include": [
-    "src"
+    "next-env.d.ts",
+    "./src/**/*",
+    "./public/**/*",
+    "./pages/**/*",
+    ".prettierrc.js",
+    ".eslintrc.js",
+    ".jest.config.js",
+    ".jest.setup.js",
+    "src/config/jest.config.js",
+    "src/config/jest.setup.js",
+    "src/custom.d.ts"
   ]
 }
